@@ -113,12 +113,32 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-si
 /* IDs */
 .ids-intro{font-size:.82rem;color:var(--muted);margin-bottom:1rem;line-height:1.7;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.85rem 1rem}
 .ids-intro strong{color:var(--accent);display:block;margin-bottom:.25rem;font-family:var(--font-head)}
-.idgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}
-.idcard{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1rem;transition:border-color .2s}
-.idcard:hover{border-color:var(--border)}
-.id-unit{font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2);margin-bottom:.35rem}
-.idcard h4{font-family:var(--font-head);font-size:1rem;color:var(--accent);margin-bottom:.4rem;font-weight:400}
-.idcard p{font-size:.8rem;color:var(--muted);line-height:1.65}
+.id-card-wrap{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.25rem;margin-bottom:1rem}
+.id-unit-tag{font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2);margin-bottom:.4rem}
+.id-term{font-family:var(--font-head);font-size:1.5rem;color:var(--accent);margin-bottom:.5rem}
+.id-subprompt{font-size:.78rem;color:var(--muted);margin-bottom:.75rem;line-height:1.5}
+.id-textarea{width:100%;min-height:110px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:.75rem;color:var(--text);font-family:var(--font-body);font-size:.88rem;line-height:1.6;resize:vertical}
+.id-textarea:focus{outline:none;border-color:var(--accent)}
+.id-textarea::placeholder{color:var(--muted)}
+.id-btn-row{display:flex;gap:8px;margin-top:.75rem;flex-wrap:wrap}
+.id-btn{padding:.5rem 1.2rem;border:1px solid var(--border);border-radius:6px;background:none;color:var(--text);font-family:var(--font-body);font-size:.82rem;cursor:pointer;transition:all .15s}
+.id-btn:hover{background:var(--surface2)}
+.id-btn.primary{border-color:var(--accent);color:var(--accent)}
+.id-btn.primary:hover{background:var(--accent);color:#0e0e10}
+.id-reveal{margin-top:.75rem;display:none;background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:.85rem 1rem}
+.id-reveal.on{display:block}
+.id-reveal-label{font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem}
+.id-reveal p{font-size:.82rem;color:var(--text);line-height:1.7}
+.id-grade-row{display:flex;gap:8px;margin-top:.75rem}
+.id-grade-btn{flex:1;padding:.55rem;border-radius:6px;font-family:var(--font-body);font-size:.82rem;cursor:pointer;border:1px solid var(--border);background:none;transition:all .15s}
+.id-grade-btn.got{border-color:var(--green);color:var(--green)}
+.id-grade-btn.got:hover{background:rgba(126,184,126,.1)}
+.id-grade-btn.missed{border-color:var(--red);color:var(--red)}
+.id-grade-btn.missed:hover{background:rgba(201,110,110,.1)}
+.id-progress{display:flex;justify-content:space-between;align-items:center;font-size:.8rem;color:var(--muted);margin-bottom:1rem}
+.id-progress b{color:var(--accent)}
+.id-final{text-align:center;padding:2rem 1rem;background:var(--surface);border-radius:10px;border:1px solid var(--border)}
+.id-final .score-big{font-family:var(--font-head);font-size:3.5rem;color:var(--accent);line-height:1}
 
 /* TRAPS */
 .traps{display:flex;flex-direction:column;gap:10px}
@@ -138,14 +158,33 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-si
 .tl-desc{font-size:.78rem;color:var(--muted);line-height:1.55}
 .tl-connection{font-size:.72rem;color:var(--accent2);margin-top:3px;font-style:italic}
 
-/* MAP */
-.map-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-@media(max-width:500px){.map-grid{grid-template-columns:1fr}}
-.map-col h3{font-family:var(--font-head);font-size:.95rem;color:var(--accent);margin-bottom:.6rem;font-weight:400}
-.map-list{list-style:none;display:flex;flex-direction:column;gap:5px}
-.map-list li{font-size:.82rem;color:var(--muted);padding:.35rem .7rem;background:var(--surface);border:1px solid var(--border);border-radius:5px;display:flex;align-items:center;gap:.5rem}
-.map-list li::before{content:'•';color:var(--accent);font-size:.6rem}
-.map-note{font-size:.78rem;color:var(--muted);margin-top:1rem;line-height:1.6;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:.7rem .9rem}
+/* MAP QUIZ */
+.map-quiz-wrap{position:relative;width:100%;max-width:640px;margin:0 auto}
+.map-svg{width:100%;height:auto;display:block;border-radius:8px;border:1px solid var(--border)}
+.map-dot{cursor:pointer;transition:r .15s}
+.map-dot:hover circle{r:9}
+.map-q-panel{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1rem;margin-top:1rem}
+.map-q-label{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem}
+.map-q-prompt{font-family:var(--font-head);font-size:1.1rem;color:var(--accent);margin-bottom:.75rem}
+.map-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.map-opt{padding:.55rem .75rem;border:1px solid var(--border);border-radius:6px;background:none;color:var(--muted);font-family:var(--font-body);font-size:.8rem;cursor:pointer;transition:all .15s;text-align:left}
+.map-opt:hover:not(:disabled){background:var(--surface2);color:var(--text);border-color:var(--accent)}
+.map-opt.ok{background:rgba(126,184,126,.12);border-color:var(--green);color:var(--green)}
+.map-opt.no{background:rgba(201,110,110,.12);border-color:var(--red);color:var(--red)}
+.map-opt:disabled{cursor:default}
+.map-score-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;font-size:.82rem;color:var(--muted)}
+.map-score-row b{color:var(--accent)}
+.map-fb{font-size:.8rem;padding:.5rem .75rem;border-radius:6px;margin-top:.6rem;display:none;line-height:1.5}
+.map-fb.on{display:block}
+.map-fb.ok{background:rgba(126,184,126,.08);border:1px solid rgba(126,184,126,.3);color:var(--green)}
+.map-fb.no{background:rgba(201,110,110,.08);border:1px solid rgba(201,110,110,.3);color:#e09090}
+.map-next{margin-top:.75rem;padding:.5rem 1.4rem;border:1px solid var(--accent);border-radius:6px;background:none;color:var(--accent);font-family:var(--font-body);font-size:.83rem;cursor:pointer;display:none}
+.map-next:hover{background:var(--accent);color:#0e0e10}
+.map-final{text-align:center;padding:2rem 1rem;background:var(--surface);border-radius:10px;border:1px solid var(--border)}
+.map-final .score-big{font-family:var(--font-head);font-size:3.5rem;color:var(--accent);line-height:1}
+.map-mode-btns{display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap}
+.map-mode-btn{padding:.45rem 1rem;border:1px solid var(--border);border-radius:20px;background:none;color:var(--muted);font-family:var(--font-body);font-size:.78rem;cursor:pointer;transition:all .15s}
+.map-mode-btn.on{background:var(--accent);color:#0e0e10;border-color:var(--accent);font-weight:500}
 
 /* SECTION TITLES */
 .sec-title{font-family:var(--font-head);font-size:1.1rem;font-weight:400;color:var(--accent);margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid var(--border)}
@@ -230,10 +269,10 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-si
 <!-- IDs -->
 <div class="sec" id="sec-ids">
   <div class="ids-intro">
-    <strong>Identification Section — Pick 8 of 16 (5 pts each = 40 pts)</strong>
-    For each ID you must identify WHO or WHAT, the TIME PERIOD, the SIGNIFICANCE. Two to three strong sentences minimum. Vague answers lose points. The definitions below are model answers — study them.
+    <strong>Identification Practice — 16 random terms, you write the ID</strong>
+    On the exam: pick 8 of 16. For each you must write WHO or WHAT, the TIME PERIOD, and the SIGNIFICANCE — 2 to 3 strong sentences minimum. Type your answer, then reveal the model answer and grade yourself honestly.
   </div>
-  <div class="idgrid" id="idgrid"></div>
+  <div id="idPracticeWrap"></div>
 </div>
 
 <!-- EXAM TRAPS -->
@@ -250,17 +289,39 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-si
 
 <!-- MAP -->
 <div class="sec" id="sec-map">
-  <p class="sec-title">Map Section (20 pts)</p>
-  <div class="map-note">You will place terms on a map of Western Europe. 1 point each. Study both cities/battle locations AND regions/kingdoms. Know where every dot goes.</div>
-  <br/>
-  <div class="map-grid">
-    <div>
-      <h3>Cities & Battle Locations</h3>
-      <ul class="map-list" id="citieslist"></ul>
-    </div>
-    <div>
-      <h3>Regions & Kingdoms</h3>
-      <ul class="map-list" id="regionslist"></ul>
+  <p class="sec-title">Map Quiz — Western Europe (20 pts)</p>
+  <div class="map-mode-btns">
+    <button class="map-mode-btn on" onclick="setMapMode('mc',this)">Multiple Choice</button>
+    <button class="map-mode-btn" onclick="setMapMode('study',this)">Study Mode</button>
+  </div>
+  <div class="map-quiz-wrap">
+    <svg class="map-svg" viewBox="0 0 640 520" id="mapSvg" xmlns="http://www.w3.org/2000/svg">
+      <!-- Europe outline - simplified -->
+      <rect width="640" height="520" fill="#1a2535" rx="8"/>
+      <!-- Sea -->
+      <path d="M0,0 h640 v520 h-640z" fill="#1a2535"/>
+      <!-- Land mass simplified Europe -->
+      <path d="M80,80 L120,60 L180,55 L240,50 L300,45 L350,48 L400,52 L440,60 L480,70 L510,90 L530,110 L540,140 L545,170 L540,200 L530,230 L520,255 L510,270 L500,260 L490,250 L480,260 L470,275 L460,285 L450,280 L445,295 L455,310 L460,330 L455,350 L440,365 L430,370 L420,360 L410,355 L400,360 L395,375 L400,390 L410,400 L405,415 L390,425 L375,420 L360,415 L345,420 L335,430 L325,435 L310,430 L300,420 L290,425 L280,440 L265,450 L250,448 L240,440 L230,435 L220,440 L210,450 L195,455 L180,450 L170,440 L160,435 L150,440 L140,450 L125,455 L110,450 L95,440 L85,425 L80,410 L75,390 L70,370 L68,345 L70,320 L72,295 L70,270 L68,245 L70,220 L75,195 L78,170 L80,145 L78,120 L80,80z" fill="#2d3d2a"/>
+      <!-- Britain -->
+      <path d="M115,110 L140,95 L160,100 L175,115 L180,135 L175,155 L165,170 L150,180 L135,175 L120,165 L110,148 L108,130 L115,110z" fill="#2d3d2a"/>
+      <!-- Ireland -->
+      <path d="M85,130 L100,120 L112,125 L115,140 L110,155 L98,162 L85,158 L78,145 L85,130z" fill="#2d3d2a"/>
+      <!-- Scandanavia simplified -->
+      <path d="M300,45 L320,30 L350,20 L390,15 L420,25 L440,45 L445,70 L440,60 L400,52 L350,48 L300,45z" fill="#2d3d2a"/>
+      <!-- Iberian Peninsula -->
+      <path d="M110,340 L130,325 L160,315 L195,310 L225,315 L250,330 L265,350 L268,375 L260,400 L245,420 L225,435 L200,440 L175,435 L150,420 L130,400 L115,375 L108,355 L110,340z" fill="#2d3d2a"/>
+
+      <!-- DOTS will be injected by JS -->
+      <g id="mapDots"></g>
+    </svg>
+    <div class="map-q-panel" id="mapPanel">
+      <div class="map-score-row"><span>Question <b id="mapQNum">1</b> of <b>20</b></span><span>Score: <b id="mapScore">0</b>/20</span></div>
+      <div class="map-q-label" id="mapQLabel">What location is marked with the flashing dot?</div>
+      <div class="map-q-prompt" id="mapQPrompt">Click Start to begin</div>
+      <div class="map-opts" id="mapOpts"></div>
+      <div class="map-fb" id="mapFb"></div>
+      <button class="map-next" id="mapNext" onclick="nextMapQ()">Next →</button>
+      <button style="padding:.5rem 1.4rem;border:1px solid var(--accent);border-radius:6px;background:var(--accent);color:#0e0e10;font-family:var(--font-body);font-size:.83rem;cursor:pointer;margin-top:.5rem" onclick="startMapQuiz()" id="mapStartBtn">Start Quiz</button>
     </div>
   </div>
 </div>
@@ -456,24 +517,6 @@ const DEFS={
   'Balkan Powder Keg':'Metaphor for the extreme instability in the Balkans before WWI. Competing nationalisms (Serb, Greek, Bulgarian), declining Ottoman power, Austro-Hungarian anxiety about Slavic nationalism, and Russian pan-Slavism created a volatile situation.'
 };
 
-const IDS=[
-  {t:'Martin Luther',u:'Reformation',d:'(1483–1546) German monk who posted the 95 Theses on October 31, 1517 in Wittenberg, attacking the sale of indulgences and Church corruption. Summoned to the Diet of Worms (1521), he refused to recant: "Here I stand." His work permanently split Western Christianity and launched Protestantism. Enabled by the printing press.'},
-  {t:'Napoleon Bonaparte',u:'French Revolution',d:'(1769–1821) Corsican-born French military genius who exploited the chaos of the Revolution to become First Consul (1799) and Emperor (1804). Conquered most of Europe. Introduced the Napoleonic Code (1804), establishing legal equality. Defeated at Trafalgar (1805) and in Russia (1812); finally at Waterloo (1815). Exiled to St. Helena.'},
-  {t:'Louis XIV',u:'Absolutism',d:'"Le Roi Soleil" (r.1643–1715). Built the Palace of Versailles outside Paris to display royal power and keep nobles under surveillance. Said "L\'état, c\'est moi" (I am the state). Revoked the Edict of Nantes (1685), persecuting Protestants. Perfected French absolutism but left France bankrupt.'},
-  {t:'Karl Marx',u:'Industrial Revolution',d:'(1818–1883) German philosopher who analyzed capitalism through the lens of class struggle between the proletariat (workers) and bourgeoisie (owners). Co-wrote the Communist Manifesto with Engels (1848); wrote Das Kapital (1867). Argued history moves through economic stages toward inevitable communist revolution.'},
-  {t:'Bismarck',u:'Nationalism',d:'Otto von Bismarck (1815–1898), Prussian chancellor. Unified Germany through three wars: Danish War (1864), Austro-Prussian War (1866), and Franco-Prussian War (1870–71). His Realpolitik approach — "blood and iron" — made Germany Europe\'s dominant land power. The Kaiser was proclaimed at Versailles on January 18, 1871.'},
-  {t:'John Locke',u:'Enlightenment',d:'(1632–1704) English philosopher whose Two Treatises of Government argued all people possess natural rights: life, liberty, and property. Government exists by the consent of the governed and can be overthrown if it violates these rights. Directly inspired the American Declaration of Independence and the French Revolution.'},
-  {t:'Gavrilo Princip',u:'WWI',d:'(1894–1918) Bosnian-Serb nationalist and member of the Black Hand. Assassinated Archduke Franz Ferdinand and his wife Sophie in Sarajevo on June 28, 1914. His act triggered Austria\'s ultimatum to Serbia, activating the alliance system and igniting World War I. He was 19 — too young for execution; died in prison in 1918.'},
-  {t:'Robespierre',u:'French Revolution',d:'Maximilien Robespierre (1758–1794), radical Jacobin lawyer. As head of the Committee of Public Safety (1793–94), directed the Reign of Terror — executing ~17,000 officially as enemies of the Revolution. Believed terror was necessary to preserve liberty. Ironically arrested and guillotined himself on 9 Thermidor (July 27, 1794).'},
-  {t:'Copernicus',u:'Renaissance',d:'Nicolaus Copernicus (1473–1543), Polish astronomer. Proposed the heliocentric model in De Revolutionibus (published 1543 on his deathbed). Directly challenged Church doctrine (geocentrism). Launched the Scientific Revolution by subjecting the universe to mathematical analysis rather than religious authority.'},
-  {t:'Cecil Rhodes',u:'Imperialism',d:'(1853–1902) British diamond magnate (founder of De Beers) and imperialist politician. Founded Rhodesia (modern Zimbabwe). Dreamed of a continuous British empire from Cape Town to Cairo. Epitomized Social Darwinism and aggressive British imperialism in the Scramble for Africa.'},
-  {t:'Metternich',u:'Nationalism',d:'Prince Klemens von Metternich (1773–1859), Austrian Foreign Minister. Dominant figure at the Congress of Vienna (1814–15), where he shaped the conservative balance of power. Opposed liberalism and nationalism throughout Europe. His system held until the Revolutions of 1848 forced him to flee.'},
-  {t:'Garibaldi',u:'Nationalism',d:'Giuseppe Garibaldi (1807–1882), Italian nationalist and military genius. Led his Redshirts to conquer Sicily and Naples (1860) in one of history\'s boldest military campaigns. Handed his conquests to Victor Emmanuel II, completing Italian unification. Embodied romantic nationalism.'},
-  {t:'King Leopold II',u:'Imperialism',d:'King of Belgium (r.1865–1909) who personally owned the Congo Free State (1885–1908) as a private colony — not Belgian state property. Enforced rubber quotas through mutilation and murder. Estimated 10 million Congolese died. International outcry (Roger Casement\'s report, 1904) forced him to hand the Congo to Belgium.'},
-  {t:'Columbus',u:'Exploration',d:'Christopher Columbus (1451–1506), Genoese navigator sailing for Spain. Reached the Caribbean on October 12, 1492. Never acknowledged he had found a new continent — died believing he had reached Asia. His voyages launched the Columbian Exchange and 300 years of European colonization of the Americas.'},
-  {t:'John Calvin',u:'Reformation',d:'(1509–1564) French-Swiss reformer who established a theocracy in Geneva. Central doctrine: predestination — God has predetermined who is saved or damned. His Institutes of the Christian Religion (1536) was foundational. Calvinism spread to become the basis of Puritan, Presbyterian, and Reformed churches.'},
-  {t:'Alexander II',u:'Russia',d:'"Tsar Liberator" (r.1855–1881). Freed 23 million serfs by the Emancipation Edict (February 19, 1861). Created Zemstvos (local elected councils). Reformed the judiciary and military. Despite being the most reformist tsar, he was assassinated by the Narodnaya Volya (People\'s Will) in 1881.'}
-];
 
 const TRAPS=[
   {h:'Locke: "property" — NOT "happiness"',b:'John Locke\'s natural rights are <span class="correct">life, liberty, and property</span>. Thomas Jefferson changed "property" to <span class="correct">"pursuit of happiness"</span> in the Declaration of Independence. Teachers test this distinction constantly.'},
@@ -517,8 +560,7 @@ const TL=[
   {y:'1914',e:'WWI begins',d:'June 28: Gavrilo Princip assassinates Franz Ferdinand in Sarajevo.',c:'MAIN causes explode into war.'}
 ];
 
-const CITIES=['Florence','Rome','Geneva','Trent','Wittenberg','Worms','Berlin','Versailles','Paris','London','Moscow','Augsburg','Sarajevo','Prague','Budapest','Constantinople','Waterloo','Trafalgar'];
-const REGIONS=['Papal States','Sardinia-Piedmont','Prussia','Aragon','Castille','Austria-Hungary','Ottoman Empire','Russia','Britain','France','The Crimean Peninsula','Corsica'];
+
 
 let allTerms=UNITS.flatMap(u=>u.terms);
 let fcCards=[...allTerms];
@@ -661,13 +703,107 @@ function showScore(w){
   </div>`;
 }
 
+// IDS POOL — more than 16 so each session is different
+const IDS_POOL=[
+  {t:'Martin Luther',u:'Reformation',d:'(1483–1546) German monk who posted the 95 Theses on October 31, 1517 in Wittenberg, attacking the sale of indulgences and Church corruption. Summoned to the Diet of Worms (1521), he refused to recant: "Here I stand." His work permanently split Western Christianity and launched Protestantism. Enabled by the printing press.'},
+  {t:'Napoleon Bonaparte',u:'French Revolution',d:'(1769–1821) Corsican-born French military genius who exploited the chaos of the Revolution to become First Consul (1799) and Emperor (1804). Conquered most of Europe. Introduced the Napoleonic Code (1804), establishing legal equality. Defeated at Trafalgar (1805) and in Russia (1812); finally at Waterloo (1815). Exiled to St. Helena.'},
+  {t:'Louis XIV',u:'Absolutism',d:'"Le Roi Soleil" (r.1643–1715). Built the Palace of Versailles outside Paris to display royal power and keep nobles under surveillance. Said "L\'état, c\'est moi" (I am the state). Revoked the Edict of Nantes (1685), persecuting Protestants. Perfected French absolutism but left France bankrupt.'},
+  {t:'Karl Marx',u:'Industrial Revolution',d:'(1818–1883) German philosopher who analyzed capitalism through the lens of class struggle between the proletariat (workers) and bourgeoisie (owners). Co-wrote the Communist Manifesto with Engels (1848); wrote Das Kapital (1867). Argued history moves through economic stages toward inevitable communist revolution.'},
+  {t:'Bismarck',u:'Nationalism',d:'Otto von Bismarck (1815–1898), Prussian chancellor. Unified Germany through three wars: Danish War (1864), Austro-Prussian War (1866), and Franco-Prussian War (1870–71). His Realpolitik approach — "blood and iron" — made Germany Europe\'s dominant land power. The Kaiser was proclaimed at Versailles on January 18, 1871.'},
+  {t:'John Locke',u:'Enlightenment',d:'(1632–1704) English philosopher whose Two Treatises of Government argued all people possess natural rights: life, liberty, and property. Government exists by the consent of the governed and can be overthrown if it violates these rights. Directly inspired the American Declaration of Independence and the French Revolution.'},
+  {t:'Gavrilo Princip',u:'WWI',d:'(1894–1918) Bosnian-Serb nationalist and member of the Black Hand. Assassinated Archduke Franz Ferdinand and his wife Sophie in Sarajevo on June 28, 1914. His act triggered Austria\'s ultimatum to Serbia, activating the alliance system and igniting World War I. He was 19 — too young for execution; died in prison in 1918.'},
+  {t:'Robespierre',u:'French Revolution',d:'Maximilien Robespierre (1758–1794), radical Jacobin lawyer. As head of the Committee of Public Safety (1793–94), directed the Reign of Terror — executing ~17,000 officially as enemies of the Revolution. Believed terror was necessary to preserve liberty. Ironically arrested and guillotined himself on 9 Thermidor (July 27, 1794).'},
+  {t:'Copernicus',u:'Renaissance',d:'Nicolaus Copernicus (1473–1543), Polish astronomer. Proposed the heliocentric model in De Revolutionibus (published 1543 on his deathbed). Directly challenged Church doctrine (geocentrism). Launched the Scientific Revolution by subjecting the universe to mathematical analysis rather than religious authority.'},
+  {t:'Cecil Rhodes',u:'Imperialism',d:'(1853–1902) British diamond magnate (founder of De Beers) and imperialist politician. Founded Rhodesia (modern Zimbabwe). Dreamed of a continuous British empire from Cape Town to Cairo. Epitomized Social Darwinism and aggressive British imperialism in the Scramble for Africa.'},
+  {t:'Metternich',u:'Nationalism',d:'Prince Klemens von Metternich (1773–1859), Austrian Foreign Minister. Dominant figure at the Congress of Vienna (1814–15), where he shaped the conservative balance of power. Opposed liberalism and nationalism throughout Europe. His system held until the Revolutions of 1848 forced him to flee.'},
+  {t:'Garibaldi',u:'Nationalism',d:'Giuseppe Garibaldi (1807–1882), Italian nationalist and military genius. Led his Redshirts to conquer Sicily and Naples (1860) in one of history\'s boldest military campaigns. Handed his conquests to Victor Emmanuel II, completing Italian unification. Embodied romantic nationalism.'},
+  {t:'King Leopold II',u:'Imperialism',d:'King of Belgium (r.1865–1909) who personally owned the Congo Free State (1885–1908) as a private colony — not Belgian state property. Enforced rubber quotas through mutilation and murder. Estimated 10 million Congolese died. International outcry (Roger Casement\'s report, 1904) forced him to hand the Congo to Belgium.'},
+  {t:'Columbus',u:'Exploration',d:'Christopher Columbus (1451–1506), Genoese navigator sailing for Spain. Reached the Caribbean on October 12, 1492. Never acknowledged he had found a new continent — died believing he had reached Asia. His voyages launched the Columbian Exchange and 300 years of European colonization of the Americas.'},
+  {t:'John Calvin',u:'Reformation',d:'(1509–1564) French-Swiss reformer who established a theocracy in Geneva. Central doctrine: predestination — God has predetermined who is saved or damned. His Institutes of the Christian Religion (1536) was foundational. Calvinism spread to become the basis of Puritan, Presbyterian, and Reformed churches.'},
+  {t:'Alexander II',u:'Russia',d:'"Tsar Liberator" (r.1855–1881). Freed 23 million serfs by the Emancipation Edict (February 19, 1861). Created Zemstvos (local elected councils). Reformed the judiciary and military. Despite being the most reformist tsar, he was assassinated by the Narodnaya Volya (People\'s Will) in 1881.'},
+  {t:'Montesquieu',u:'Enlightenment',d:'Baron de Montesquieu (1689–1755). Wrote Spirit of the Laws (1748), proposing separation of powers into executive, legislative, and judicial branches. This directly shaped the U.S. Constitution. He used the Persian Letters to satirize French society and Church corruption.'},
+  {t:'Magellan',u:'Exploration',d:'Ferdinand Magellan (c.1480–1521) led the first expedition to circumnavigate the globe (1519–1522). He was killed in the Philippines — his crew under Juan Sebastián Elcano completed the voyage. Proved the Earth was round and vastly larger than Columbus imagined.'},
+  {t:'Voltaire',u:'Enlightenment',d:'(1694–1778) French philosophe and the most famous Enlightenment writer. Championed religious tolerance, free speech, and reason. Attacked the Catholic Church relentlessly as corrupt and superstitious. Wrote Candide (1759). Famous: "I disapprove of what you say, but I will defend to the death your right to say it."'},
+  {t:'Franz Ferdinand',u:'WWI',d:'Archduke Franz Ferdinand (1863–1914), heir to the Austro-Hungarian throne. Assassinated in Sarajevo, Bosnia on June 28, 1914 along with his wife Sophie. His death triggered Austria\'s ultimatum to Serbia, activating the interlocking alliance system and igniting World War I.'},
+  {t:'Thomas Hobbes',u:'Enlightenment',d:'(1588–1679) English philosopher who wrote Leviathan (1651). Argued that humans in the state of nature are naturally selfish and life is "solitary, poor, nasty, brutish, and short." A strong, even authoritarian sovereign was necessary to maintain order through the social contract.'},
+  {t:'King Henry VIII',u:'Reformation',d:'(r.1509–1547) English king who broke from the Catholic Church when Pope Clement VII refused to annul his marriage to Catherine of Aragon. The Act of Supremacy (1534) made him head of the Church of England. His break was political, not theological — driven by desire for a male heir.'},
+  {t:'Cavour',u:'Nationalism',d:'Count Camillo di Cavour (1810–1861), Prime Minister of Sardinia-Piedmont. Mastermind of Italian unification through Realpolitik — he allied with France against Austria, modernized Piedmont\'s economy, and maneuvered diplomatically to unite northern Italy. Victor Emmanuel II was proclaimed King of Italy in 1861.'},
+  {t:'Louis XVI',u:'French Revolution',d:'(r.1774–1793) Weak and indecisive French king who failed to manage the kingdom\'s bankruptcy or the Revolution. Convened the Estates General in 1789, triggering the Revolution. Attempted to flee in the Flight to Varennes (1791). Tried for treason and guillotined on January 21, 1793.'},
+];
+
+let idSession=[];
+let idIdx=0;
+let idGot=0;
+let idRevealed=false;
+
 function buildIDs(){
-  const g=document.getElementById('idgrid');
-  IDS.forEach(x=>{
-    const d=document.createElement('div');d.className='idcard';
-    d.innerHTML=`<div class="id-unit">${x.u.toUpperCase()}</div><h4>${x.t}</h4><p>${x.d}</p>`;
-    g.appendChild(d);
-  });
+  startIDSession();
+}
+
+function startIDSession(){
+  // shuffle pool and pick 16
+  idSession=[...IDS_POOL].sort(()=>Math.random()-.5).slice(0,16);
+  idIdx=0;idGot=0;
+  renderIDCard();
+}
+
+function renderIDCard(){
+  const wrap=document.getElementById('idPracticeWrap');
+  if(idIdx>=idSession.length){
+    const pct=Math.round(idGot/idSession.length*100);
+    const msg=idGot>=14?'Excellent — you know these cold.':idGot>=10?'Good. Review the ones you missed.':idGot>=8?'Passing, but borderline. Keep drilling.':'You need more reps. Restart and go again.';
+    wrap.innerHTML=`<div class="id-final">
+      <div class="id-final score-big">${idGot}/16</div>
+      <div style="font-size:.8rem;color:var(--muted);margin-top:.4rem">${pct}% — ${msg}</div>
+      <button class="retry-btn" onclick="startIDSession()" style="margin-top:1.25rem">New set of 16 (reshuffled)</button>
+    </div>`;
+    return;
+  }
+  idRevealed=false;
+  const item=idSession[idIdx];
+  wrap.innerHTML=`
+    <div class="id-progress">
+      <span>ID <b>${idIdx+1}</b> of ${idSession.length}</span>
+      <span>Self-graded: <b>${idGot}</b> / ${idIdx}</span>
+    </div>
+    <div class="id-card-wrap">
+      <div class="id-unit-tag">${item.u.toUpperCase()}</div>
+      <div class="id-term">${item.t}</div>
+      <div class="id-subprompt">Write your ID: identify WHO or WHAT, the TIME PERIOD, and the SIGNIFICANCE. Minimum 2–3 sentences.</div>
+      <textarea class="id-textarea" id="idInput" placeholder="Type your answer here..."></textarea>
+      <div class="id-btn-row">
+        <button class="id-btn primary" onclick="revealID()">Reveal model answer</button>
+        <button class="id-btn" onclick="skipID()">Skip →</button>
+      </div>
+      <div class="id-reveal" id="idReveal">
+        <div class="id-reveal-label">Model Answer</div>
+        <p>${item.d}</p>
+        <div style="font-size:.75rem;color:var(--muted);margin-top:.6rem;font-style:italic">Compare your answer honestly. Did you hit: the person/event, the date/period, and the historical significance?</div>
+        <div class="id-grade-row">
+          <button class="id-grade-btn got" onclick="gradeID(true)">✓ Got it (5/5)</button>
+          <button class="id-grade-btn missed" onclick="gradeID(false)">✗ Missed it (0/5)</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function revealID(){
+  if(idRevealed)return;
+  idRevealed=true;
+  document.getElementById('idReveal').classList.add('on');
+  document.querySelector('.id-btn.primary').disabled=true;
+  document.querySelector('.id-btn.primary').style.opacity='0.4';
+}
+
+function gradeID(got){
+  if(got)idGot++;
+  idIdx++;
+  renderIDCard();
+}
+
+function skipID(){
+  idIdx++;
+  renderIDCard();
 }
 
 function buildTraps(){
@@ -688,11 +824,173 @@ function buildTimeline(){
   });
 }
 
+// MAP QUIZ DATA — x,y coordinates on the 640x520 SVG viewBox
+const MAP_LOCATIONS=[
+  {name:'Florence',      x:340, y:285, type:'city', hint:'Northern Italy — birthplace of the Renaissance'},
+  {name:'Rome',          x:345, y:320, type:'city', hint:'Central Italy — seat of the Papal States and the Catholic Church'},
+  {name:'Geneva',        x:285, y:255, type:'city', hint:'Switzerland — where John Calvin set up his theocracy'},
+  {name:'Trent',         x:320, y:258, type:'city', hint:'Northern Italy — site of the Council of Trent (1545–63)'},
+  {name:'Wittenberg',    x:355, y:175, type:'city', hint:'Germany — where Luther posted the 95 Theses on October 31, 1517'},
+  {name:'Worms',         x:305, y:200, type:'city', hint:'Germany — site of the Diet of Worms (1521) where Luther refused to recant'},
+  {name:'Berlin',        x:370, y:160, type:'city', hint:'Prussia — capital of the German kingdom; core of Bismarck\'s unification'},
+  {name:'Versailles',    x:248, y:225, type:'city', hint:'France — where Louis XIV built his palace; also where German Kaiser was proclaimed in 1871'},
+  {name:'Paris',         x:248, y:218, type:'city', hint:'Capital of France — center of the French Revolution'},
+  {name:'London',        x:200, y:178, type:'city', hint:'Capital of Britain — center of the Industrial Revolution and British Empire'},
+  {name:'Moscow',        x:500, y:130, type:'city', hint:'Russia — Napoleon\'s failed destination in 1812'},
+  {name:'Augsburg',      x:330, y:215, type:'city', hint:'Germany — Peace of Augsburg (1555) signed here'},
+  {name:'Sarajevo',      x:410, y:295, type:'city', hint:'Bosnia — where Gavrilo Princip assassinated Franz Ferdinand on June 28, 1914'},
+  {name:'Prague',        x:375, y:205, type:'city', hint:'Bohemia — capital of the Habsburg lands in central Europe'},
+  {name:'Budapest',      x:410, y:250, type:'city', hint:'Hungary — capital of the Hungarian half of the Dual Monarchy'},
+  {name:'Constantinople',x:490, y:315, type:'city', hint:'Ottoman capital — fell to the Turks in 1453; modern Istanbul'},
+  {name:'Waterloo',      x:262, y:185, type:'city', hint:'Belgium — where Napoleon was finally defeated on June 18, 1815'},
+  {name:'Trafalgar',     x:155, y:370, type:'city', hint:'Off the Spanish coast — where Nelson destroyed Napoleon\'s fleet in 1805'},
+  {name:'Papal States',  x:345, y:305, type:'region', hint:'Central Italy — territory ruled directly by the Pope'},
+  {name:'Sardinia-Piedmont',x:295,y:280,type:'region',hint:'Northwestern Italy — kingdom that led Italian unification under Cavour and Victor Emmanuel II'},
+  {name:'Prussia',       x:385, y:155, type:'region', hint:'Northern Germany — Bismarck\'s kingdom that unified Germany'},
+  {name:'Aragon',        x:190, y:330, type:'region', hint:'Eastern Spain — kingdom of Ferdinand; united with Castile in 1469'},
+  {name:'Castille',      x:165, y:345, type:'region', hint:'Central Spain — kingdom of Isabella; united with Aragon in 1469'},
+  {name:'Austria-Hungary',x:390,y:240,type:'region', hint:'The Dual Monarchy after the Ausgleich of 1867 — ruled by Francis Joseph I'},
+  {name:'Ottoman Empire', x:490,y:340,type:'region', hint:'The "Sick Man of Europe" — declining empire in southeastern Europe and the Middle East'},
+  {name:'Russia',        x:510, y:150, type:'region', hint:'Vast empire to the east — Alexander II, Bloody Sunday, 1905 Revolution'},
+  {name:'Britain',       x:170, y:155, type:'region', hint:'Island nation — defeated the Spanish Armada; led the Industrial Revolution'},
+  {name:'France',        x:240, y:250, type:'region', hint:'Center of the Enlightenment, French Revolution, and Napoleon\'s empire'},
+  {name:'The Crimean Peninsula',x:490,y:270,type:'region',hint:'Peninsula in the Black Sea — site of the Crimean War (1853–56)'},
+  {name:'Corsica',       x:300, y:310, type:'region', hint:'Mediterranean island — birthplace of Napoleon Bonaparte'},
+];
+
+let mapMode='mc';
+let mapQ=[];
+let mapQIdx=0;
+let mapQScore=0;
+let mapAnswered=false;
+let mapActiveIdx=-1;
+let pulseInterval=null;
+
+function setMapMode(mode,btn){
+  mapMode=mode;
+  document.querySelectorAll('.map-mode-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+}
+
+function buildMapDots(highlightIdx=-1){
+  const g=document.getElementById('mapDots');
+  g.innerHTML='';
+  MAP_LOCATIONS.forEach((loc,i)=>{
+    const isHL=i===highlightIdx;
+    const isCity=loc.type==='city';
+    // dot
+    const circle=document.createElementNS('http://www.w3.org/2000/svg','circle');
+    circle.setAttribute('cx',loc.x);
+    circle.setAttribute('cy',loc.y);
+    circle.setAttribute('r', isHL?9:isCity?5:7);
+    circle.setAttribute('fill', isHL?'#c9a96e':isCity?'#7eb8a4':'rgba(126,184,126,0.5)');
+    circle.setAttribute('stroke', isHL?'#fff':'rgba(255,255,255,0.3)');
+    circle.setAttribute('stroke-width', isHL?2:1);
+    if(isHL){
+      const anim=document.createElementNS('http://www.w3.org/2000/svg','animate');
+      anim.setAttribute('attributeName','r');
+      anim.setAttribute('values','9;13;9');
+      anim.setAttribute('dur','1s');
+      anim.setAttribute('repeatCount','indefinite');
+      circle.appendChild(anim);
+    }
+    g.appendChild(circle);
+
+    // study mode label
+    if(mapMode==='study'){
+      const text=document.createElementNS('http://www.w3.org/2000/svg','text');
+      text.setAttribute('x',loc.x+8);
+      text.setAttribute('y',loc.y+4);
+      text.setAttribute('font-size','9');
+      text.setAttribute('fill','#c9a96e');
+      text.setAttribute('font-family','DM Sans, sans-serif');
+      text.textContent=loc.name;
+      g.appendChild(text);
+    }
+  });
+}
+
+function startMapQuiz(){
+  document.getElementById('mapStartBtn').style.display='none';
+  mapQ=[...MAP_LOCATIONS].sort(()=>Math.random()-.5);
+  mapQIdx=0;mapQScore=0;
+  showMapQ();
+}
+
+function showMapQ(){
+  if(mapQIdx>=mapQ.length){showMapFinal();return;}
+  const q=mapQ[mapQIdx];
+  mapAnswered=false;
+  const locIdx=MAP_LOCATIONS.findIndex(l=>l.name===q.name);
+  buildMapDots(locIdx);
+
+  document.getElementById('mapQNum').textContent=mapQIdx+1;
+  document.getElementById('mapScore').textContent=mapQScore;
+  document.getElementById('mapQLabel').textContent=q.type==='city'?'City or Battle Location:':'Region or Kingdom:';
+  document.getElementById('mapQPrompt').textContent='What is marked by the flashing dot?';
+
+  // build 4 options
+  const pool=MAP_LOCATIONS.filter(l=>l.name!==q.name).sort(()=>Math.random()-.5).slice(0,3);
+  const opts=[q,...pool].sort(()=>Math.random()-.5);
+
+  const container=document.getElementById('mapOpts');
+  container.innerHTML='';
+  opts.forEach(o=>{
+    const b=document.createElement('button');
+    b.className='map-opt';
+    b.textContent=o.name;
+    b.onclick=()=>answerMap(b,o.name===q.name,q);
+    container.appendChild(b);
+  });
+
+  document.getElementById('mapFb').className='map-fb';
+  document.getElementById('mapFb').textContent='';
+  document.getElementById('mapNext').style.display='none';
+}
+
+function answerMap(btn,correct,q){
+  if(mapAnswered)return;
+  mapAnswered=true;
+  const allBtns=document.querySelectorAll('.map-opt');
+  allBtns.forEach(b=>{
+    b.disabled=true;
+    if(b.textContent===q.name)b.classList.add('ok');
+    else if(b===btn&&!correct)b.classList.add('no');
+  });
+  const fb=document.getElementById('mapFb');
+  fb.classList.add('on');
+  if(correct){
+    mapQScore++;
+    fb.classList.add('ok');
+    fb.innerHTML='<strong>Correct.</strong> '+q.hint;
+  } else {
+    fb.classList.add('no');
+    fb.innerHTML='<strong>Wrong — that\'s '+q.name+'.</strong> '+q.hint;
+  }
+  document.getElementById('mapScore').textContent=mapQScore;
+  document.getElementById('mapNext').style.display='inline-block';
+}
+
+function nextMapQ(){
+  mapQIdx++;
+  showMapQ();
+}
+
+function showMapFinal(){
+  buildMapDots(-1);
+  const pct=Math.round(mapQScore/mapQ.length*100);
+  const msg=pct>=90?'Excellent. That map section is yours.':pct>=75?'Good — a few locations need review.':pct>=50?'Shaky. Go through Study Mode and drill each dot.':'Start over with Study Mode before attempting the quiz again.';
+  document.getElementById('mapPanel').innerHTML=`
+    <div class="map-final">
+      <div class="score-big">${mapQScore}/20</div>
+      <div style="font-size:.8rem;color:var(--muted);margin-top:.3rem">${pct}% — ${msg}</div>
+      <button class="retry-btn" onclick="startMapQuiz()" style="margin-top:1rem">Retake map quiz</button>
+    </div>`;
+}
+
 function buildMap(){
-  const cl=document.getElementById('citieslist');
-  const rl=document.getElementById('regionslist');
-  CITIES.forEach(c=>{const li=document.createElement('li');li.textContent=c;cl.appendChild(li)});
-  REGIONS.forEach(r=>{const li=document.createElement('li');li.textContent=r;rl.appendChild(li)});
+  // Build study mode initially
+  buildMapDots(-1);
 }
 
 buildUnits();buildFilter();buildIDs();buildTraps();buildTimeline();buildMap();setFilter('all');
