@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>World History I — Final Exam Prep</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#0e0e10;--surface:#18181c;--surface2:#222228;--border:#2e2e38;
+  --text:#f0ede8;--muted:#7a7a8c;--accent:#c9a96e;--accent2:#7eb8a4;
+  --red:#c96e6e;--green:#7eb87e;
+  --font-head:'Playfair Display',Georgia,serif;
+  --font-body:'DM Sans',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:15px;line-height:1.6;min-height:100vh}
+
+/* HEADER */
+.site-header{padding:2.5rem 1.5rem 1.5rem;text-align:center;border-bottom:1px solid var(--border);position:relative}
+.site-header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 50% 0%,rgba(201,169,110,.07),transparent);pointer-events:none}
+.site-header h1{font-family:var(--font-head);font-size:clamp(1.6rem,4vw,2.4rem);font-weight:700;letter-spacing:-.01em;color:var(--accent);margin-bottom:.3rem}
+.site-header p{font-size:.85rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+.exam-meta{display:flex;justify-content:center;gap:1.5rem;margin-top:1rem;flex-wrap:wrap}
+.exam-meta span{font-size:.78rem;color:var(--muted);background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:.25rem .7rem;letter-spacing:.05em}
+.exam-meta span b{color:var(--accent);font-weight:500}
+
+/* PROGRESS */
+.global-progress{padding:.75rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:1rem}
+.gp-bar{flex:1;height:3px;background:var(--border);border-radius:2px;overflow:hidden}
+.gp-fill{height:100%;background:linear-gradient(90deg,var(--accent2),var(--accent));border-radius:2px;transition:width .5s ease;width:0%}
+.gp-txt{font-size:.75rem;color:var(--muted);white-space:nowrap;min-width:110px;text-align:right}
+
+/* TABS */
+.tabs{display:flex;gap:0;border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{flex:1;min-width:100px;padding:.9rem .5rem;background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font-family:var(--font-body);font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:all .2s;white-space:nowrap}
+.tabs button:hover{color:var(--text)}
+.tabs button.on{color:var(--accent);border-bottom-color:var(--accent)}
+
+/* SECTIONS */
+.sec{display:none;padding:1.5rem}.sec.on{display:block}
+
+/* UNITS GRID */
+.ugrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:1rem}
+.ucard{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1rem;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+.ucard::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(201,169,110,.04),transparent);opacity:0;transition:opacity .2s}
+.ucard:hover{border-color:var(--accent);transform:translateY(-2px)}
+.ucard:hover::before{opacity:1}
+.ucard .ico{font-size:1.4rem;margin-bottom:.5rem}
+.ucard h3{font-size:.82rem;font-weight:500;margin-bottom:.25rem;color:var(--text)}
+.ucard .cnt{font-size:.72rem;color:var(--accent2)}
+.warn-box{background:rgba(201,169,110,.07);border:1px solid rgba(201,169,110,.25);border-radius:8px;padding:1rem 1.25rem;font-size:.83rem;color:var(--accent);line-height:1.7;margin-bottom:1rem}
+.warn-box strong{display:block;margin-bottom:.3rem;font-family:var(--font-head);font-size:1rem}
+
+/* FLASHCARDS */
+.fc-filter{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1rem}
+.fc-filter button{padding:.25rem .75rem;font-size:.75rem;border:1px solid var(--border);border-radius:20px;background:none;cursor:pointer;color:var(--muted);font-family:var(--font-body);transition:all .15s}
+.fc-filter button.on{background:var(--accent);color:#0e0e10;border-color:var(--accent);font-weight:500}
+.fc-wrap{perspective:1200px;height:210px;max-width:560px;margin:0 auto 1rem}
+.fc{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,0,.2,1);cursor:pointer}
+.fc.flip{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:10px;border:1px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.5rem;text-align:center}
+.face-front{background:var(--surface)}
+.face-back{transform:rotateY(180deg);background:var(--surface2)}
+.fc-label{font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.6rem}
+.fc-term{font-family:var(--font-head);font-size:1.5rem;color:var(--accent);line-height:1.2}
+.fc-hint{font-size:.72rem;color:var(--muted);margin-top:.75rem}
+.fc-def{font-size:.85rem;color:var(--text);line-height:1.65}
+.fc-unit-tag{font-size:.65rem;color:var(--accent2);margin-top:.6rem;letter-spacing:.06em}
+.fc-btns{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:.75rem;flex-wrap:wrap}
+.fc-btns button{padding:.45rem 1.1rem;border:1px solid var(--border);border-radius:6px;background:none;color:var(--text);font-family:var(--font-body);font-size:.8rem;cursor:pointer;transition:all .15s}
+.fc-btns button:hover{background:var(--surface2)}
+.btn-know{border-color:var(--green)!important;color:var(--green)!important}
+.btn-know:hover{background:rgba(126,184,126,.1)!important}
+.btn-dontknow{border-color:var(--red)!important;color:var(--red)!important}
+.btn-dontknow:hover{background:rgba(201,110,110,.1)!important}
+.fc-counter{font-size:.8rem;color:var(--muted);min-width:60px;text-align:center}
+.mini-bar{height:3px;background:var(--border);border-radius:2px;overflow:hidden;margin-top:.5rem}
+.mini-fill{height:100%;background:var(--green);border-radius:2px;transition:width .4s}
+.mini-txt{font-size:.72rem;color:var(--muted);text-align:right;margin-top:.3rem}
+
+/* QUIZ */
+.qbox{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.25rem;margin-bottom:.75rem}
+.q-num{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem}
+.q-txt{font-family:var(--font-head);font-size:1.05rem;line-height:1.5;margin-bottom:1rem;color:var(--text)}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{padding:.7rem 1rem;border:1px solid var(--border);border-radius:6px;cursor:pointer;font-size:.85rem;background:none;text-align:left;color:var(--muted);font-family:var(--font-body);transition:all .15s;line-height:1.4}
+.opt:hover:not(:disabled){background:var(--surface2);color:var(--text);border-color:var(--accent)}
+.opt.ok{background:rgba(126,184,126,.1);border-color:var(--green);color:var(--green)}
+.opt.no{background:rgba(201,110,110,.1);border-color:var(--red);color:var(--red)}
+.opt:disabled{cursor:default}
+.qfb{padding:.75rem 1rem;border-radius:6px;font-size:.82rem;margin-top:.75rem;display:none;line-height:1.6}
+.qfb.on{display:block}
+.qfb.ok{background:rgba(126,184,126,.08);border:1px solid rgba(126,184,126,.3);color:var(--green)}
+.qfb.no{background:rgba(201,110,110,.08);border:1px solid rgba(201,110,110,.3);color:#e09090}
+.q-nav{margin-top:.75rem}
+.q-nav button{padding:.55rem 1.4rem;border:1px solid var(--accent);border-radius:6px;background:none;color:var(--accent);font-family:var(--font-body);font-size:.83rem;cursor:pointer;transition:all .15s}
+.q-nav button:hover{background:var(--accent);color:#0e0e10}
+.score-card{text-align:center;padding:2.5rem 1rem;background:var(--surface);border-radius:10px;border:1px solid var(--border);margin-bottom:1rem}
+.score-big{font-family:var(--font-head);font-size:4rem;color:var(--accent);line-height:1}
+.score-sub{font-size:.8rem;color:var(--muted);margin-top:.3rem}
+.score-msg{font-size:.95rem;margin-top:1rem;color:var(--text);line-height:1.6;max-width:420px;margin-left:auto;margin-right:auto}
+.score-breakdown{margin-top:1.25rem;display:flex;flex-direction:column;gap:6px;max-width:360px;margin-left:auto;margin-right:auto;text-align:left}
+.sb-item{display:flex;justify-content:space-between;font-size:.78rem;color:var(--muted);padding:.3rem 0;border-bottom:1px solid var(--border)}
+.sb-item span:last-child{color:var(--text)}
+.retry-btn{margin-top:1.25rem;padding:.65rem 2rem;border:1px solid var(--accent);border-radius:6px;background:none;color:var(--accent);font-family:var(--font-body);font-size:.85rem;cursor:pointer;transition:all .2s}
+.retry-btn:hover{background:var(--accent);color:#0e0e10}
+
+/* IDs */
+.ids-intro{font-size:.82rem;color:var(--muted);margin-bottom:1rem;line-height:1.7;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.85rem 1rem}
+.ids-intro strong{color:var(--accent);display:block;margin-bottom:.25rem;font-family:var(--font-head)}
+.idgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}
+.idcard{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1rem;transition:border-color .2s}
+.idcard:hover{border-color:var(--border)}
+.id-unit{font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2);margin-bottom:.35rem}
+.idcard h4{font-family:var(--font-head);font-size:1rem;color:var(--accent);margin-bottom:.4rem;font-weight:400}
+.idcard p{font-size:.8rem;color:var(--muted);line-height:1.65}
+
+/* TRAPS */
+.traps{display:flex;flex-direction:column;gap:10px}
+.trap{background:var(--surface);border:1px solid rgba(201,169,110,.25);border-left:3px solid var(--accent);border-radius:8px;padding:.9rem 1rem}
+.trap h4{font-size:.85rem;font-weight:500;color:var(--accent);margin-bottom:.3rem}
+.trap p{font-size:.8rem;color:var(--muted);line-height:1.65}
+.trap .correct{color:var(--green);font-weight:500}
+.trap .wrong{color:var(--red);font-weight:500}
+
+/* TIMELINE */
+.tl{position:relative;padding-left:28px}
+.tl::before{content:'';position:absolute;left:9px;top:0;bottom:0;width:1px;background:var(--border)}
+.tli{position:relative;margin-bottom:18px}
+.tli::before{content:'';position:absolute;left:-23px;top:5px;width:9px;height:9px;border-radius:50%;background:var(--accent);border:2px solid var(--bg)}
+.tl-year{font-size:.72rem;color:var(--accent);font-weight:500;letter-spacing:.06em;margin-bottom:2px}
+.tl-event{font-size:.88rem;font-weight:500;color:var(--text);margin-bottom:2px}
+.tl-desc{font-size:.78rem;color:var(--muted);line-height:1.55}
+.tl-connection{font-size:.72rem;color:var(--accent2);margin-top:3px;font-style:italic}
+
+/* MAP */
+.map-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:500px){.map-grid{grid-template-columns:1fr}}
+.map-col h3{font-family:var(--font-head);font-size:.95rem;color:var(--accent);margin-bottom:.6rem;font-weight:400}
+.map-list{list-style:none;display:flex;flex-direction:column;gap:5px}
+.map-list li{font-size:.82rem;color:var(--muted);padding:.35rem .7rem;background:var(--surface);border:1px solid var(--border);border-radius:5px;display:flex;align-items:center;gap:.5rem}
+.map-list li::before{content:'•';color:var(--accent);font-size:.6rem}
+.map-note{font-size:.78rem;color:var(--muted);margin-top:1rem;line-height:1.6;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:.7rem .9rem}
+
+/* SECTION TITLES */
+.sec-title{font-family:var(--font-head);font-size:1.1rem;font-weight:400;color:var(--accent);margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid var(--border)}
+</style>
+</head>
+<body>
+
+<div class="site-header">
+  <h1>World History I — Final Exam</h1>
+  <p>Renaissance &nbsp;→&nbsp; WWI</p>
+  <div class="exam-meta">
+    <span>Total: <b>200 pts</b></span>
+    <span>Map: <b>20 pts</b></span>
+    <span>MC: <b>50 pts</b></span>
+    <span>Fill-In: <b>50 pts</b></span>
+    <span>IDs: <b>40 pts</b></span>
+    <span>Short Answer: <b>40 pts</b></span>
+    <span>Worth: <b>10% of grade</b></span>
+  </div>
+</div>
+
+<div class="global-progress">
+  <div class="gp-bar"><div class="gp-fill" id="gpf"></div></div>
+  <div class="gp-txt" id="gpt">0 terms reviewed</div>
+</div>
+
+<div class="tabs">
+  <button class="on" onclick="showTab('overview',this)">Units</button>
+  <button onclick="showTab('flashcards',this)">Flashcards</button>
+  <button onclick="showTab('quiz',this);initQuiz()">Quiz</button>
+  <button onclick="showTab('ids',this)">IDs</button>
+  <button onclick="showTab('traps',this)">Exam Traps</button>
+  <button onclick="showTab('timeline',this)">Timeline</button>
+  <button onclick="showTab('map',this)">Map</button>
+</div>
+
+<!-- OVERVIEW -->
+<div class="sec on" id="sec-overview">
+  <div class="warn-box">
+    <strong>Before you begin</strong>
+    This exam covers Renaissance through Causes of WWI. It tests vocabulary, conceptual understanding, and your ability to use supporting details. No notecard allowed. Start with Flashcards to drill terms, then take the Quiz cold. Check Exam Traps for distinctions teachers love to exploit.
+  </div>
+  <div class="ugrid" id="ugrid"></div>
+</div>
+
+<!-- FLASHCARDS -->
+<div class="sec" id="sec-flashcards">
+  <div class="fc-filter" id="fcfilter"></div>
+  <div class="fc-wrap">
+    <div class="fc" id="fccard" onclick="flipFC()">
+      <div class="face face-front">
+        <div class="fc-label">Term</div>
+        <div class="fc-term" id="fct">—</div>
+        <div class="fc-hint">Click to flip</div>
+      </div>
+      <div class="face face-back">
+        <div class="fc-label">Definition</div>
+        <div class="fc-def" id="fcd">—</div>
+        <div class="fc-unit-tag" id="fcu">—</div>
+      </div>
+    </div>
+  </div>
+  <div class="fc-btns">
+    <button onclick="fcMove(-1)">← Prev</button>
+    <span class="fc-counter" id="fcc">— / —</span>
+    <button onclick="fcMove(1)">Next →</button>
+  </div>
+  <div class="fc-btns">
+    <button onclick="fcShuffle()">Shuffle</button>
+    <button class="btn-know" onclick="fcKnow()">✓ Know it</button>
+    <button class="btn-dontknow" onclick="fcDontKnow()">✗ Still learning</button>
+  </div>
+  <div class="mini-bar"><div class="mini-fill" id="fcpbar" style="width:0%"></div></div>
+  <div class="mini-txt" id="fcptxt">0 known</div>
+</div>
+
+<!-- QUIZ -->
+<div class="sec" id="sec-quiz">
+  <div id="qwrap"></div>
+</div>
+
+<!-- IDs -->
+<div class="sec" id="sec-ids">
+  <div class="ids-intro">
+    <strong>Identification Section — Pick 8 of 16 (5 pts each = 40 pts)</strong>
+    For each ID you must identify WHO or WHAT, the TIME PERIOD, the SIGNIFICANCE. Two to three strong sentences minimum. Vague answers lose points. The definitions below are model answers — study them.
+  </div>
+  <div class="idgrid" id="idgrid"></div>
+</div>
+
+<!-- EXAM TRAPS -->
+<div class="sec" id="sec-traps">
+  <p class="sec-title">Common Exam Traps & Distinctions</p>
+  <div class="traps" id="traplist"></div>
+</div>
+
+<!-- TIMELINE -->
+<div class="sec" id="sec-timeline">
+  <p class="sec-title">Chronological Framework</p>
+  <div class="tl" id="tlcont"></div>
+</div>
+
+<!-- MAP -->
+<div class="sec" id="sec-map">
+  <p class="sec-title">Map Section (20 pts)</p>
+  <div class="map-note">You will place terms on a map of Western Europe. 1 point each. Study both cities/battle locations AND regions/kingdoms. Know where every dot goes.</div>
+  <br/>
+  <div class="map-grid">
+    <div>
+      <h3>Cities & Battle Locations</h3>
+      <ul class="map-list" id="citieslist"></ul>
+    </div>
+    <div>
+      <h3>Regions & Kingdoms</h3>
+      <ul class="map-list" id="regionslist"></ul>
+    </div>
+  </div>
+</div>
+
+<script>
+const UNITS=[
+  {id:'ren',label:'Renaissance & Reformation',ico:'🎨',terms:['Florence','Medici Family','Humanism','Leonardo da Vinci','Michelangelo','Raphael','Perspective','Machiavelli','Printing Press','Gutenberg','Martin Luther','Indulgences','Tetzel','95 Theses','Peace of Augsburg','HRE Charles V','Diet at Worms','John Calvin','Predestination','King Henry VIII','Annulment','Act of Supremacy','Anglican Church','Bloody Mary','Elizabeth I','Counter-Reformation','Council of Trent','Jesuit Order','Inquisition','Copernicus','Kepler','Galileo','Newton','Bacon','Descartes']},
+  {id:'exp',label:'Age of Exploration',ico:'⛵',terms:['Reconquista','Ferdinand and Isabella','Henry the Navigator','Cartography','Astrolabe','Columbus','Da Gama','Dias','Magellan','Columbian Exchange','Hernan Cortes','Moctezuma','Aztecs','Incas','Pizarro','Treaty of Tordesillas','Line of Demarcation']},
+  {id:'abs',label:'Absolutism',ico:'👑',terms:['Absolutism','Philip II of Spain','Spanish Armada','Elizabeth I of England','Louis XIV of France','Palace at Versailles']},
+  {id:'enl',label:'Enlightenment',ico:'💡',terms:['John Locke','Montesquieu','Voltaire','Diderot','Thomas Hobbes','Adam Smith','Capitalism','Salons','Social Contract','Laissez-Faire','Natural Rights','Divine Right','Philosophe','Natural Law']},
+  {id:'frn',label:'French Revolution & Napoleon',ico:'🗼',terms:['Ancien Regime','Tennis Court Oath','Estates General','Bastille','King Louis XVI','March on Versailles','Robespierre','Decl. of Rights of Man','Reign of Terror','Directory','Napoleon Bonaparte','Guillotine','Emigres','Nationalism','Napoleonic Code','Sans-Culotte','Jean-Paul Marat','Jacobins','Flight to Varennes','Civil Const. of Clergy','National Assembly','Continental System','Concordat of 1801','Hundred Days','Nepotism','Plebiscite','Abdicate','Trafalgar','Russian Invasion','Waterloo','Peninsular War']},
+  {id:'ind',label:'Industrial Revolution',ico:'⚙️',terms:['Enclosure','James Watt','George Stephenson','Child Labor','Factory Acts','Smelting','Cottage Industry','Textiles','Capital','Factory','Urbanization','Proletariat','Bourgeoisie','Socialism','Communism','Communist Manifesto','Karl Marx','Labor Unions']},
+  {id:'nat',label:'Nationalism & Unification',ico:'🗺️',terms:['Congress of Vienna','Metternich','Conservative','Liberal','Balance of Power','Legitimacy','Intervention','Revolutions of 1830/1848','Mazzini','Garibaldi','Victor Emmanuel II','Cavour','Redshirts','Realpolitik','Kaiser','Bismarck','Blood and Iron','Franco-Prussian War','Kulturkampf','Concert of Europe']},
+  {id:'emp',label:'Russia / Austria / Ottoman',ico:'🏰',terms:['Crimean War','Serfdom','Alexander II','Alexander III','Zemstvos','Pogroms','Duma','Russo-Japanese War','Bloody Sunday','October Manifesto','Francis Joseph I','Dual-Monarchy','Ausgleich','Sick Man of Europe']},
+  {id:'imp',label:'Imperialism',ico:'🌍',terms:['Causes of Imperialism','Effects of Imperialism','Social Darwinism','Protectorate','Cecil Rhodes','Sphere of Influence','David Livingstone','Henry Stanley','King Leopold II','Berlin Conference','Scramble for Africa','Sepoy Mutiny','White Man\'s Burden']},
+  {id:'wwi',label:'Causes of WWI',ico:'⚔️',terms:['MAIN Causes of WWI','Triple Alliance','Triple Entente','Franz Ferdinand','Gavrilo Princip','Balkan Powder Keg']}
+];
+
+const DEFS={
+  'Florence':'Major Italian city-state; birthplace of the Renaissance. Wealth from banking (especially the Medici) funded the explosion of art and learning beginning in the 14th–15th centuries.',
+  'Medici Family':'Powerful Florentine banking dynasty whose patronage financed Renaissance artists including Botticelli, Leonardo, and Michelangelo. Lorenzo de\' Medici ("the Magnificent") was their peak patron.',
+  'Humanism':'Core Renaissance philosophy celebrating human reason, potential, and achievement. Shifted focus from purely theological concerns to the study of classical Greek and Roman texts (the studia humanitatis).',
+  'Leonardo da Vinci':'(1452–1519) Renaissance polymath — painter (Mona Lisa, Last Supper), anatomist, engineer, inventor. The ideal "Renaissance man." Worked in Florence and Milan.',
+  'Michelangelo':'(1475–1564) Sculptor of David (1504) and the Pieta; painted the Sistine Chapel ceiling (1508–1512). Worked primarily in Florence and Rome under papal patronage.',
+  'Raphael':'(1483–1520) Painter celebrated for clarity, harmony, and beauty. Best known for the School of Athens (1509–11) in the Vatican, depicting classical philosophers.',
+  'Perspective':'Linear perspective — a mathematical technique developed by Brunelleschi creating the illusion of three-dimensional depth on a flat surface. Revolutionized Renaissance painting.',
+  'Machiavelli':'Niccolò Machiavelli (1469–1527), Florentine diplomat and author of The Prince (1513). Argued effective rulers must prioritize power over morality — the ends justify the means.',
+  'Printing Press':'Gutenberg\'s movable-type press (c.1440) made mass production of books possible. Luther\'s 95 Theses spread across Germany within weeks because of it — the Reformation would have been impossible without it.',
+  'Gutenberg':'Johannes Gutenberg (c.1400–1468), German inventor of the European movable-type printing press, c.1440. His Bible (1455) was the first major book printed in Europe.',
+  'Martin Luther':'(1483–1546) German Augustinian monk who posted the 95 Theses on October 31, 1517 in Wittenberg. Refused to recant at Diet of Worms (1521). His work permanently split Western Christianity.',
+  'Indulgences':'Payments to the Catholic Church supposedly reducing time in purgatory. Pope Leo X authorized their sale to fund St. Peter\'s Basilica. Johann Tetzel\'s aggressive sales campaign provoked Luther.',
+  'Tetzel':'Johann Tetzel — Dominican friar notorious for selling indulgences in Germany. His pitch ("As soon as the coin in the coffer rings, a soul from purgatory springs") directly provoked Luther\'s 95 Theses.',
+  '95 Theses':'Luther\'s October 31, 1517 document attacking indulgences and Church corruption. Printed and distributed across Germany, launching the Protestant Reformation.',
+  'Peace of Augsburg':'1555 agreement between HRE Charles V and German princes. Established cuius regio, eius religio — "whose realm, his religion." Only Lutheranism and Catholicism recognized — NOT Calvinism.',
+  'HRE Charles V':'Holy Roman Emperor (r.1519–1556) and King of Spain. Summoned Luther to the Diet of Worms (1521). Fought the Schmalkaldic League of Protestant princes. Eventually abdicated.',
+  'Diet at Worms':'1521 imperial assembly where Charles V ordered Luther to recant. Luther refused: "Here I stand, I can do no other." Was declared an outlaw; sheltered by Frederick the Wise of Saxony.',
+  'John Calvin':'(1509–1564) French-Swiss theologian who established a theocracy in Geneva. Key doctrines: predestination, total depravity, TULIP. His Institutes of the Christian Religion (1536) was foundational.',
+  'Predestination':'Calvin\'s doctrine that God, being omniscient, has already determined before creation who will be saved (elect) and who will be damned. Humans cannot change this through good works.',
+  'King Henry VIII':'(r.1509–1547) English king who sought an annulment of his marriage to Catherine of Aragon to marry Anne Boleyn. When the Pope refused, he broke from Rome via the Act of Supremacy (1534).',
+  'Annulment':'A declaration that a marriage was never validly formed. Henry VIII needed one because Catherine had not produced a male heir. Pope Clement VII refused — he was under the influence of Catherine\'s nephew, Charles V.',
+  'Act of Supremacy':'1534 parliamentary act declaring Henry VIII the "Supreme Head of the Church of England." Replaced papal authority with royal authority in England.',
+  'Anglican Church':'Church of England established by Henry VIII. Maintained Catholic structure but broke from Rome. Doctrine evolved under Edward VI (Protestant) and was settled under Elizabeth I.',
+  'Bloody Mary':'Mary I (r.1553–1558), Catholic daughter of Henry VIII who reversed Protestant reforms and burned ~280 Protestants — earning her nickname. Her reign was short; Elizabeth I reversed her changes.',
+  'Elizabeth I':'(r.1558–1603) Protestant daughter of Henry VIII. Defeated the Spanish Armada (1588). Established the Elizabethan Religious Settlement — moderate Protestantism. Golden age of English culture.',
+  'Counter-Reformation':'Catholic Church\'s comprehensive response to Protestantism: internal reform (Council of Trent), new religious orders (Jesuits), and the Inquisition. Reaffirmed Catholic doctrine against Protestant challenges.',
+  'Council of Trent':'1545–1563, Trento, Italy. Reaffirmed transubstantiation, celibacy, Latin Mass, seven sacraments. Reformed corruption. Definitively separated Catholicism from Protestantism.',
+  'Jesuit Order':'Society of Jesus, founded by Ignatius Loyola (1540). Focused on education and missionary work. Became the intellectual backbone of the Counter-Reformation. Famous for rigorous training.',
+  'Inquisition':'Church tribunal to identify and punish heresy. The Spanish Inquisition (est. 1478) was especially feared — used torture, operated under royal authority, targeted conversos and Protestants.',
+  'Copernicus':'Nicolaus Copernicus (1473–1543), Polish astronomer who proposed the heliocentric model in De Revolutionibus (1543, published on his deathbed). Directly challenged Church geocentrism.',
+  'Kepler':'Johannes Kepler (1571–1630). Proved planets orbit in ELLIPSES (not circles) and that they move faster when closer to the Sun. Three laws of planetary motion refined Copernicus\'s model.',
+  'Galileo':'Galileo Galilei (1564–1642). Used telescope to confirm heliocentrism; discovered moons of Jupiter. Tried by the Inquisition in 1633; forced to recant; kept under house arrest until death.',
+  'Newton':'Isaac Newton (1643–1727). Principia Mathematica (1687): Law of Universal Gravitation, three laws of motion. United terrestrial and celestial mechanics. Peak of the Scientific Revolution.',
+  'Bacon':'Francis Bacon (1561–1626). Father of empiricism and the inductive scientific method — observe, experiment, generalize. Argued knowledge comes from evidence, not ancient authority.',
+  'Descartes':'René Descartes (1596–1650). "Cogito, ergo sum" — I think, therefore I am. Promoted deductive reasoning (start with clear axioms, reason to conclusions). Father of modern philosophy.',
+  'Reconquista':'The centuries-long Christian reconquest of the Iberian Peninsula from Muslim Moors. Completed January 2, 1492 when Ferdinand and Isabella captured Granada. Directly enabled the voyages of exploration.',
+  'Ferdinand and Isabella':'Ferdinand of Aragon and Isabella of Castile unified Spain through marriage (1469). Completed the Reconquista (1492), expelled Jews (1492), funded Columbus (1492), established the Spanish Inquisition.',
+  'Henry the Navigator':'Prince Henry of Portugal (1394–1460). Did not sail himself but organized and funded Portuguese expeditions down the African coast. Established a school of navigation at Sagres.',
+  'Cartography':'Science and art of mapmaking. Age of Exploration revolutionized cartography — new coastlines, projection systems, and the correction of ancient errors by Ptolemy.',
+  'Astrolabe':'Navigation instrument used to measure the altitude of celestial bodies to determine latitude at sea. Used alongside compasses for open-ocean navigation.',
+  'Columbus':'Christopher Columbus (1451–1506), Genoese navigator sailing for Spain. Reached the Caribbean (Hispaniola) October 12, 1492. Never acknowledged he had found a new continent — died thinking it was Asia.',
+  'Da Gama':'Vasco da Gama (c.1460–1524). First European to reach India by sea, sailing around Africa (1497–1499). Opened a direct sea route to Asia, breaking the Ottoman/Venetian monopoly on eastern trade.',
+  'Dias':'Bartolomeu Dias (c.1450–1500). First European to round the Cape of Good Hope (1488), proving a sea route from Europe to Asia was possible.',
+  'Magellan':'Ferdinand Magellan (c.1480–1521). Led the first circumnavigation of the globe (1519–1522) — but he was killed in the Philippines. His crew completed it under Elcano.',
+  'Columbian Exchange':'Massive bi-directional transfer of crops, animals, diseases, and people between the Old World and New World after 1492. Europe → Americas: smallpox, horses, wheat. Americas → Europe: potatoes, corn, tomatoes.',
+  'Hernan Cortes':'Spanish conquistador (1485–1547) who conquered the Aztec Empire in Mexico (1519–1521) with 600 men — enabled by smallpox, native allies, and psychological warfare.',
+  'Moctezuma':'Moctezuma II (1466–1520), Aztec emperor at the time of the Spanish conquest. Captured by Cortes; died in disputed circumstances — either killed by Spaniards or stoned by his own people.',
+  'Aztecs':'Mesoamerican empire centered at Tenochtitlán (modern Mexico City), population ~5–10 million. Conquered by Cortes 1519–1521; destroyed by a combination of Spanish arms and smallpox.',
+  'Incas':'South American empire in the Andes, stretching 2,500 miles. Conquered by Francisco Pizarro (1532–1572) with ~168 men. Smallpox had already killed much of the population including the emperor.',
+  'Pizarro':'Francisco Pizarro (c.1471–1541). Conquered the Inca Empire in Peru. Captured and executed Emperor Atahualpa despite receiving a room full of gold as ransom.',
+  'Treaty of Tordesillas':'1494 treaty (brokered by Pope Alexander VI) dividing the non-European world between Spain (west) and Portugal (east) along a line 370 leagues west of the Cape Verde Islands. Brazil went to Portugal.',
+  'Line of Demarcation':'The boundary established by the Treaty of Tordesillas (1494) dividing Spanish and Portuguese colonial zones. Spain received most of the Americas; Portugal received Africa, Asia, and Brazil.',
+  'Absolutism':'System of government where the monarch holds complete, unchallengeable authority — over law, church, army, and taxation. Justified by Divine Right. Best exemplified by Louis XIV of France.',
+  'Philip II of Spain':'"Most Catholic King" (r.1556–1598). Son of Charles V. Ruled the largest empire on Earth. Sent the Armada against Protestant England (1588). Tried to suppress Dutch revolt. Defender of Catholicism.',
+  'Spanish Armada':'130-ship fleet sent by Philip II to invade Protestant England in 1588. Defeated by English ships (under Drake) and storms. Ended Spanish naval supremacy and boosted English Protestant confidence.',
+  'Elizabeth I of England':'(r.1558–1603). Defeated the Spanish Armada (1588). Established a moderate Protestant church. Never married — the Virgin Queen. Enabled English exploration and trade expansion.',
+  'Louis XIV of France':'"Le Roi Soleil" (Sun King), r.1643–1715. Built the Palace of Versailles. Said "L\'état, c\'est moi" (I am the state). Revoked the Edict of Nantes (1685). Waged multiple costly wars. Peak of French absolutism.',
+  'Palace at Versailles':'Built by Louis XIV outside Paris. Housed the court and nobility — keeping potential rivals under his watch. Symbol of royal power and wealth. 700 rooms, 1,400 fountains.',
+  'John Locke':'(1632–1704). Two Treatises of Government: natural rights are life, liberty, and PROPERTY (not happiness — Jefferson changed it). Government exists by consent of the governed. Right to revolt if rights violated.',
+  'Montesquieu':'Baron de Montesquieu (1689–1755). Spirit of the Laws (1748): proposed separation of powers into three branches (executive, legislative, judicial). Directly influenced the U.S. Constitution.',
+  'Voltaire':'(1694–1778). Champion of free speech, religious tolerance, and reason. Attacked the Church as corrupt and superstitious. Wrote Candide. Famous quote: "I disapprove of what you say, but I will defend your right to say it."',
+  'Diderot':'Denis Diderot (1713–1784). Compiled the Encyclopédie (1751–1772) — 28 volumes gathering all Enlightenment knowledge. Spreading ideas was a political act; the French crown tried to suppress it.',
+  'Thomas Hobbes':'(1588–1679). Leviathan (1651): humans are naturally selfish and brutal; life without government is "solitary, poor, nasty, brutish, and short." A strong sovereign is necessary — even if authoritarian.',
+  'Adam Smith':'(1723–1790). Wealth of Nations (1776): capitalism works through the "invisible hand" of free markets. Advocated laissez-faire economics — government should not interfere in the economy.',
+  'Capitalism':'Economic system based on private ownership of the means of production, free markets, wage labor, and the pursuit of profit. Grew alongside industrialization in the 18th–19th centuries.',
+  'Salons':'Intellectual gatherings in private Parisian homes (often hosted by aristocratic women called salonnières) where philosophes debated Enlightenment ideas. Key to spreading radical thought.',
+  'Social Contract':'The agreement between people and their government. Hobbes: surrender rights to a strong ruler for security. Locke: government protects natural rights; can be overthrown if it doesn\'t. Rousseau: general will.',
+  'Laissez-Faire':'French for "let it be." Economic doctrine (Adam Smith) that free markets self-regulate — the government should not interfere through tariffs, regulations, or monopolies.',
+  'Natural Rights':'Rights that belong to all humans by nature, not granted by government (Locke: life, liberty, property). Government\'s purpose is to protect them. The basis of both the American Declaration and French Revolution.',
+  'Divine Right':'Political doctrine that monarchs derive authority directly from God and are accountable only to God — not to parliament or the people. Used to justify absolutism (Louis XIV, James I of England).',
+  'Philosophe':'French term for Enlightenment intellectuals who applied reason to social, political, and religious problems. Voltaire, Diderot, Montesquieu, Rousseau. Not just philosophers — writers, journalists, reformers.',
+  'Natural Law':'The concept that universal moral principles discoverable through reason apply to all humans regardless of culture or government. Basis for natural rights theory. Roots in Stoic philosophy and Aquinas.',
+  'Ancien Regime':'The "old regime" — France\'s social and political system before 1789. Society divided into three estates: clergy (1st), nobility (2nd), everyone else (3rd — 97% of population). Third Estate paid all taxes.',
+  'Tennis Court Oath':'June 20, 1789. Third Estate delegates, locked out of the Estates General, met at a nearby tennis court and swore not to disband until France had a written constitution. Radical break with royal authority.',
+  'Estates General':'France\'s representative assembly of all three estates, last called in 1614. Louis XVI convened it May 1789 to address bankruptcy. Dispute over voting (by head vs. by estate) triggered the Revolution.',
+  'Bastille':'Medieval fortress-prison in Paris. Stormed July 14, 1789 by a crowd seeking weapons and gunpowder. Only 7 prisoners inside — the symbolic importance far outweighed the practical impact.',
+  'King Louis XVI':'(r.1774–1792). Weak, indecisive king who failed to manage France\'s financial crisis or the Revolution. Attempted to flee (Flight to Varennes, 1791). Tried for treason and guillotined January 21, 1793.',
+  'March on Versailles':'October 5–6, 1789. Thousands of Parisian women marched to Versailles, forced Louis XVI and Marie Antoinette to return to Paris — making them prisoners of the Revolution.',
+  'Robespierre':'Maximilien Robespierre (1758–1794). Lawyer, Jacobin leader. Directed the Reign of Terror as head of the Committee of Public Safety. Executed ~17,000 officially; possibly 40,000+ died in custody. Guillotined July 27, 1794.',
+  'Decl. of Rights of Man':'August 26, 1789. Declared by the National Assembly: liberty, equality, property, security, and resistance to oppression. Modeled on Locke and the U.S. Declaration. Did NOT include women (Olympe de Gouges protested).',
+  'Reign of Terror':'September 1793 – July 1794. Robespierre\'s Committee of Public Safety executed anyone deemed an enemy of the Revolution. Ended when Robespierre himself was arrested and guillotined (Thermidorian Reaction).',
+  'Directory':'1795–1799 five-man executive body that ruled France after the Terror. Corrupt and ineffective. Overthrown by Napoleon\'s coup of 18 Brumaire (November 9, 1799).',
+  'Napoleon Bonaparte':'(1769–1821). Corsican-born French military genius. Became First Consul (1799), Emperor (1804). Conquered most of Europe. Introduced the Napoleonic Code. Defeated at Trafalgar (1805), in Russia (1812), at Waterloo (1815). Exiled to St. Helena.',
+  'Guillotine':'Device for execution by decapitation, used extensively during the Reign of Terror. Named after Dr. Joseph-Ignace Guillotin who proposed it as a more humane method. ~2,700 executions in Paris alone.',
+  'Emigres':'French nobles, clergy, and royalists who fled France during the Revolution. Many organized counter-revolutionary forces from abroad. Napoleon allowed some to return.',
+  'Nationalism':'Strong loyalty and identification with one\'s nation. A product of the French Revolution and Napoleon\'s conquests. Drove Italian and German unification. Became a major cause of WWI in the Balkans.',
+  'Napoleonic Code':'Civil law code promulgated by Napoleon in 1804. Established legal equality, property rights, religious tolerance, and abolished feudalism. Still influences law in France, Quebec, and Louisiana.',
+  'Sans-Culotte':'Literally "without knee-breeches" — Parisian working-class radicals who wore long trousers instead of aristocratic breeches. Drove the radical phase of the Revolution; supported Robespierre.',
+  'Jean-Paul Marat':'Radical journalist and physician; published L\'Ami du peuple. Advocate of extreme violence against enemies of the Revolution. Assassinated in his medicinal bath by Charlotte Corday (1793).',
+  'Jacobins':'Radical republican political club (formally the Society of the Friends of the Constitution). Led by Robespierre. Controlled the Committee of Public Safety during the Terror. Opposed by the moderate Girondins.',
+  'Flight to Varennes':'June 1791. Louis XVI and Marie Antoinette attempted to flee France to join counter-revolutionary forces. Recognized and arrested. Destroyed any remaining trust in the monarchy.',
+  'Civil Const. of Clergy':'1790 law requiring the French clergy to swear loyalty to the state rather than the Pope. Split the Church — "juring" priests complied, "non-juring" priests refused. Alienated many Catholics from the Revolution.',
+  'National Assembly':'The Third Estate\'s self-declared governing body (June 1789). Later became the Constituent National Assembly. Drafted the Declaration of Rights of Man and the Constitution of 1791.',
+  'Continental System':'Napoleon\'s 1806 economic blockade forbidding European nations from trading with Britain. Failed because Britain found other markets and European nations (especially Russia) cheated. Helped bring Napoleon down.',
+  'Concordat of 1801':'Agreement between Napoleon and Pope Pius VII. Restored the Catholic Church in France but kept it under state control. Ended the religious conflict of the Revolution. Napoleon gained political legitimacy.',
+  'Hundred Days':'Napoleon\'s return from Elba (March 1–June 22, 1815). He reclaimed power briefly before his final defeat at Waterloo and second exile to St. Helena.',
+  'Nepotism':'Favoritism shown to relatives — especially in job appointments. Napoleon made his brothers kings of conquered territories. A major source of resentment among his allies.',
+  'Plebiscite':'A direct popular vote on a political question. Napoleon used them (1799, 1802, 1804) to create an appearance of democratic legitimacy for his assumption of power.',
+  'Abdicate':'To formally surrender a throne or power. Napoleon abdicated twice — April 1814 (to Elba) and June 1815 (to St. Helena).',
+  'Trafalgar':'October 21, 1805. British Admiral Nelson destroyed the French-Spanish fleet off Cape Trafalgar, Spain. Britain secured naval supremacy for a century. Nelson was killed in the battle.',
+  'Russian Invasion':'1812. Napoleon invaded Russia with 600,000 men. Russians used scorched-earth tactics. Moscow burned. The winter and retreating Russian army destroyed the Grande Armée — only ~100,000 survived.',
+  'Waterloo':'June 18, 1815, near Brussels, Belgium. Napoleon defeated by Wellington\'s British forces and Blücher\'s Prussians. His final defeat. Followed by second abdication and exile to St. Helena.',
+  'Peninsular War':'1808–1814. Napoleon installed his brother Joseph as King of Spain. Spanish guerrilla resistance bled French forces dry over 6 years. Wellington\'s British forces fought from Portugal. A major cause of Napoleon\'s downfall.',
+  'Enclosure':'Privatization and fencing of common agricultural land in Britain (16th–19th centuries). Drove peasants off the land into cities — creating the urban working class essential for industrialization.',
+  'James Watt':'(1736–1819) Scottish engineer who dramatically improved the Newcomen steam engine (1769). His efficient, double-acting engine became the power source for factories, mines, and eventually locomotives.',
+  'George Stephenson':'(1781–1848) Built the Rocket locomotive (1829), which won the Rainhill Trials and proved steam locomotion\'s viability. Father of the railways. His Stockton–Darlington line (1825) was the first public railway.',
+  'Child Labor':'Widespread use of children (some as young as 5) in mines, textile mills, and factories. Long hours, dangerous conditions, minimal pay. Exposed by reformers; gradually restricted by Factory Acts.',
+  'Factory Acts':'Series of British parliamentary laws (1833, 1844, 1847, etc.) limiting child labor, setting minimum ages, requiring school for child workers, and establishing inspectors. Result of reform movement.',
+  'Smelting':'Process of extracting metal from ore using heat. The use of coke (from coal) instead of charcoal to smelt iron was a key early Industrial Revolution innovation, enabling cheap iron production.',
+  'Cottage Industry':'Pre-industrial system where merchant capitalists distributed raw materials to rural families who produced goods (especially textiles) at home. Replaced by centralized factories during industrialization.',
+  'Textiles':'Cloth manufacturing — especially cotton — was the first major industrialized industry. Inventions like the spinning jenny (Hargreaves), water frame (Arkwright), and power loom drove the transformation.',
+  'Capital':'Money or assets invested to generate more wealth. Access to capital (from Britain\'s colonial trade profits) was a key reason Britain industrialized first.',
+  'Factory':'Centralized building housing machinery and wage laborers — replacing the cottage industry. Created new social dynamics: strict hours, urban concentration, and class tensions.',
+  'Urbanization':'Rapid growth of cities as workers left rural areas for factory jobs. Manchester\'s population grew from 25,000 (1772) to 300,000 (1850). Created slums, pollution, and new social problems.',
+  'Proletariat':'Marxist term for the industrial working class — those who own no means of production and must sell their labor to survive. Marx argued they would inevitably overthrow the bourgeoisie.',
+  'Bourgeoisie':'Marxist term for the capitalist middle class — those who own the means of production (factories, machines) and exploit proletarian labor for profit.',
+  'Socialism':'Economic/political system advocating collective or government ownership of the means of production to eliminate exploitation. Emerged as a critique of industrial capitalism\'s inequalities.',
+  'Communism':'Extreme form of socialism (as theorized by Marx): a classless, stateless society where production is collectively owned and all contribute and receive according to need. The final stage of historical development.',
+  'Communist Manifesto':'1848 pamphlet by Karl Marx and Friedrich Engels. Opening: "A spectre is haunting Europe — the spectre of communism." Analyzed history as class struggle. Called proletarians to unite and overthrow capitalism.',
+  'Karl Marx':'(1818–1883) German philosopher, economist, and revolutionary. Developed historical materialism and the theory of surplus value. Co-wrote the Communist Manifesto (1848); wrote Das Kapital (1867).',
+  'Labor Unions':'Organizations of workers who collectively bargain for better wages, hours, and conditions. Illegal in Britain until 1824. Grew throughout the 19th century despite employer resistance.',
+  'Congress of Vienna':'1814–1815 conference of European great powers (Austria, Prussia, Russia, Britain) that redrew the map of Europe after Napoleon. Goals: balance of power, legitimacy, conservatism.',
+  'Metternich':'Prince Klemens von Metternich (1773–1859), Austrian Foreign Minister. Dominated the Congress of Vienna. Architect of the conservative Concert of Europe. Suppressed liberal/nationalist revolutions until 1848.',
+  'Conservative':'Post-1815 political position defending tradition, monarchy, church, and established social hierarchy against liberal and nationalist change. Metternich was the leading conservative.',
+  'Liberal':'Post-1815 political position advocating constitutional government, individual rights, free markets, and reform. Opposed divine right monarchy and aristocratic privilege.',
+  'Balance of Power':'Congress of Vienna principle: no single European nation should be strong enough to dominate the others. Maintained through a shifting system of alliances. Prevented major European war until 1914.',
+  'Legitimacy':'Congress of Vienna principle: restore the "legitimate" pre-Napoleonic royal dynasties to their thrones (Bourbons in France and Spain, etc.). Rejected the idea that Napoleon\'s conquests created valid rule.',
+  'Intervention':'Metternich\'s principle that the great powers had the right (and duty) to intervene militarily in any nation where revolution threatened the established order.',
+  'Revolutions of 1830/1848':'Wave of liberal and nationalist uprisings. 1830: France, Belgium, Poland. 1848 ("Springtime of Nations"): France, Austria, Prussia, Italian states, Hungary. Most were suppressed, but ideas survived.',
+  'Mazzini':'Giuseppe Mazzini (1805–1872). Italian nationalist who founded Young Italy (1831). Believed Italy\'s unification must come through popular revolution. His idealism inspired but his revolts failed; Cavour succeeded.',
+  'Garibaldi':'Giuseppe Garibaldi (1807–1882). Romantic nationalist and military genius. Led the Redshirts to conquer Sicily and Naples (1860), delivering them to Victor Emmanuel II and completing Italian unification.',
+  'Victor Emmanuel II':'King of Sardinia-Piedmont; first king of unified Italy (proclaimed March 17, 1861). Provided the monarchy that gave Cavour\'s and Garibaldi\'s efforts political legitimacy.',
+  'Cavour':'Count Camillo di Cavour (1810–1861), Prime Minister of Sardinia-Piedmont. Used Realpolitik — allied with France against Austria, modernized Piedmont\'s economy, maneuvered diplomatically to unify northern Italy.',
+  'Redshirts':'Garibaldi\'s volunteer forces, named for their distinctive red shirts. Conquered the Kingdom of the Two Sicilies (1860) in a brilliant guerrilla campaign with ~1,000 men.',
+  'Realpolitik':'Politics based on practical power interests rather than ideology or ethics. Bismarck and Cavour\'s approach: use war, diplomacy, and deception as tools of national interest without moral constraint.',
+  'Kaiser':'German for "Emperor." Wilhelm I was declared Kaiser of the unified German Empire on January 18, 1871 in the Hall of Mirrors at Versailles — a deliberate humiliation of defeated France.',
+  'Bismarck':'Otto von Bismarck (1815–1898), "Iron Chancellor." Unified Germany through three wars (Danish War 1864, Austro-Prussian War 1866, Franco-Prussian War 1870–71) and masterful diplomacy.',
+  'Blood and Iron':'Bismarck\'s September 1862 speech: "The great questions of the day will not be settled by speeches and majority decisions... but by iron and blood." — meaning military force and industrial strength.',
+  'Franco-Prussian War':'1870–1871. Prussia defeated France rapidly; Napoleon III captured at Sedan. France lost Alsace-Lorraine. Unified Germany proclaimed at Versailles. Created lasting French resentment toward Germany.',
+  'Kulturkampf':'"Culture struggle." Bismarck\'s 1871–1878 campaign to reduce Catholic Church influence in Germany through legislation. Ultimately failed — alienated Catholics and strengthened the Centre Party. Bismarck backed down.',
+  'Concert of Europe':'Post-1815 system of great-power consultation and cooperation to maintain the conservative balance established at Vienna. Included Austria, Prussia, Russia, Britain, and later France.',
+  'Crimean War':'1853–1856. Britain, France, and the Ottoman Empire fought Russia in Crimea. Russia lost. Exposed Russian military backwardness and motivated Alexander II\'s reforms. Florence Nightingale worked here.',
+  'Serfdom':'System of bound labor in Russia where peasants were legally tied to the land and their lord — similar to medieval serfdom. Abolished by Alexander II\'s Emancipation Edict, February 19, 1861.',
+  'Alexander II':'"Tsar Liberator" (r.1855–1881). Freed 23 million serfs (1861), created Zemstvos, reformed judiciary and military. Despite reforms, assassinated by the Narodnaya Volya (People\'s Will) in 1881.',
+  'Alexander III':'(r.1881–1894). Violently reversed his father\'s reforms. Imposed Russification policies, restricted the Duma, encouraged pogroms against Jews. His repression stored up revolutionary pressure.',
+  'Zemstvos':'Local elected councils created by Alexander II\'s 1864 reform. Handled roads, schools, and healthcare at the local level. Gave some Russians experience with self-government — but had no national power.',
+  'Pogroms':'Organized violent attacks on Jewish communities in Russia, tacitly supported by the state under Alexander III and Nicholas II. Drove mass Jewish emigration to Western Europe and America.',
+  'Duma':'Russia\'s elected parliament, established by the October Manifesto after the 1905 Revolution. Nicholas II progressively restricted its powers — it never became a true legislative body.',
+  'Russo-Japanese War':'1904–1905. Japan decisively defeated Russia — a shock to the world. Russia lost Manchuria and Port Arthur. The humiliation triggered the 1905 Revolution at home.',
+  'Bloody Sunday':'January 9/22, 1905. Tsar\'s soldiers shot peaceful marchers (led by Father Gapon) petitioning Nicholas II outside the Winter Palace. ~130–200+ killed. Destroyed the Tsar\'s image as "Little Father."',
+  'October Manifesto':'October 17, 1905. Nicholas II\'s decree (written by Witte) promising civil liberties and an elected Duma. Split the opposition; ended the 1905 Revolution. Nicholas later rolled back most promises.',
+  'Francis Joseph I':'Emperor of Austria (r.1848–1916) and King of Hungary. Ruled for 68 years through massive change. Lost wars to France/Piedmont (1859) and Prussia (1866). His heir Franz Ferdinand\'s assassination sparked WWI.',
+  'Dual-Monarchy':'Austria-Hungary after the Ausgleich (1867) — two equal kingdoms (Austria and Hungary) under one Habsburg ruler (Francis Joseph I). Each had its own parliament but shared foreign policy and military.',
+  'Ausgleich':'The Compromise of 1867. Created the Austro-Hungarian Dual Monarchy. Austria and Hungary gained equal status under the Habsburg crown. Result of Austrian weakness after defeat by Prussia in 1866.',
+  'Sick Man of Europe':'Term (attributed to Tsar Nicholas I) describing the Ottoman Empire\'s steady decline in the 19th century — losing territory in the Balkans, North Africa, and the Middle East. Used to justify European interference.',
+  'Causes of Imperialism':'Economic needs (raw materials, markets), nationalism/prestige, Social Darwinism ("civilizing mission"), military/strategic bases, missionary activity, and European rivalries.',
+  'Effects of Imperialism':'Exploitation of resources and labor, forced cultural change, artificial borders, resistance movements (Sepoy Mutiny), spread of European languages/religion, and foundations of 20th-century decolonization.',
+  'Social Darwinism':'Misapplication of Darwin\'s "survival of the fittest" to human societies, races, and nations. Used to justify European imperial conquest as "natural" and "scientific." Popularized by Herbert Spencer.',
+  'Protectorate':'A territory that retains nominal local rule but is controlled in foreign policy and defense by a stronger imperial power. The local ruler is a puppet. Example: Egypt under British "protection."',
+  'Cecil Rhodes':'(1853–1902) British diamond magnate (De Beers), Prime Minister of the Cape Colony. Founded Rhodesia (modern Zimbabwe). Dreamed of a continuous British empire from Cape Town to Cairo. Said: "I would annex the planets if I could."',
+  'Sphere of Influence':'A region where an outside power has dominant economic, political, or military control without formal annexation. China was divided into spheres of influence among European powers, Japan, and the U.S.',
+  'David Livingstone':'(1813–1873) Scottish missionary and explorer. Mapped large parts of central Africa. Disappeared for years; found by Henry Stanley (1871). His writings exposed the Arab slave trade and prompted European involvement.',
+  'Henry Stanley':'(1841–1904) Welsh-American journalist and explorer. Sent by the New York Herald to find Livingstone. Famously greeted him: "Dr. Livingstone, I presume?" Later helped King Leopold II claim the Congo.',
+  'King Leopold II':'King of Belgium (r.1865–1909). Personally owned the Congo Free State (1885–1908) — not a Belgian colony, his private property. Rubber quotas enforced by mutilation and murder; estimated 10 million deaths.',
+  'Berlin Conference':'November 1884 – February 1885. Bismarck hosted 14 European nations to regulate the Scramble for Africa. Established rules for claiming territories. Not a single African was present or consulted.',
+  'Scramble for Africa':'The rapid European colonization of nearly all of Africa between ~1880–1914. In 1870, Europeans controlled ~10% of Africa; by 1914, ~90%. Driven by economic and strategic competition.',
+  'Sepoy Mutiny':'1857 Indian rebellion against British East India Company rule. Triggered by new rifle cartridges rumored to be greased with cow and pig fat (offensive to Hindu and Muslim soldiers). Led to direct British Crown rule of India.',
+  'White Man\'s Burden':'1899 poem by Rudyard Kipling addressed to the U.S. after it acquired the Philippines. Expressed the racist ideology that Europeans had a moral duty to "civilize" non-European peoples — a justification for imperialism.',
+  'MAIN Causes of WWI':'MAIN: Militarism (arms race), Alliance System (interlocking obligations), Imperialism (colonial rivalries), Nationalism (especially in the Balkans). The assassination of Franz Ferdinand was the SPARK, not the root cause.',
+  'Triple Alliance':'Military alliance of Germany, Austria-Hungary, and Italy (formed 1882). Italy declared neutrality in 1914 (the war was "offensive" so didn\'t trigger the alliance) and later joined the Entente.',
+  'Triple Entente':'Alliance of France, Russia, and Britain (formalized 1907). Less formal than the Triple Alliance — more a series of agreements (Franco-Russian Alliance 1894, Entente Cordiale 1904, Anglo-Russian Convention 1907).',
+  'Franz Ferdinand':'Archduke Franz Ferdinand (1863–1914), heir to the Austro-Hungarian throne. Assassinated in Sarajevo, Bosnia on June 28, 1914 with his wife Sophie. His death triggered Austria\'s ultimatum to Serbia.',
+  'Gavrilo Princip':'(1894–1918) Bosnian-Serb member of the Black Hand nationalist organization. Assassinated Franz Ferdinand with a pistol on June 28, 1914 in Sarajevo. He was 19 — too young to be executed; died in prison.',
+  'Balkan Powder Keg':'Metaphor for the extreme instability in the Balkans before WWI. Competing nationalisms (Serb, Greek, Bulgarian), declining Ottoman power, Austro-Hungarian anxiety about Slavic nationalism, and Russian pan-Slavism created a volatile situation.'
+};
+
+const IDS=[
+  {t:'Martin Luther',u:'Reformation',d:'(1483–1546) German monk who posted the 95 Theses on October 31, 1517 in Wittenberg, attacking the sale of indulgences and Church corruption. Summoned to the Diet of Worms (1521), he refused to recant: "Here I stand." His work permanently split Western Christianity and launched Protestantism. Enabled by the printing press.'},
+  {t:'Napoleon Bonaparte',u:'French Revolution',d:'(1769–1821) Corsican-born French military genius who exploited the chaos of the Revolution to become First Consul (1799) and Emperor (1804). Conquered most of Europe. Introduced the Napoleonic Code (1804), establishing legal equality. Defeated at Trafalgar (1805) and in Russia (1812); finally at Waterloo (1815). Exiled to St. Helena.'},
+  {t:'Louis XIV',u:'Absolutism',d:'"Le Roi Soleil" (r.1643–1715). Built the Palace of Versailles outside Paris to display royal power and keep nobles under surveillance. Said "L\'état, c\'est moi" (I am the state). Revoked the Edict of Nantes (1685), persecuting Protestants. Perfected French absolutism but left France bankrupt.'},
+  {t:'Karl Marx',u:'Industrial Revolution',d:'(1818–1883) German philosopher who analyzed capitalism through the lens of class struggle between the proletariat (workers) and bourgeoisie (owners). Co-wrote the Communist Manifesto with Engels (1848); wrote Das Kapital (1867). Argued history moves through economic stages toward inevitable communist revolution.'},
+  {t:'Bismarck',u:'Nationalism',d:'Otto von Bismarck (1815–1898), Prussian chancellor. Unified Germany through three wars: Danish War (1864), Austro-Prussian War (1866), and Franco-Prussian War (1870–71). His Realpolitik approach — "blood and iron" — made Germany Europe\'s dominant land power. The Kaiser was proclaimed at Versailles on January 18, 1871.'},
+  {t:'John Locke',u:'Enlightenment',d:'(1632–1704) English philosopher whose Two Treatises of Government argued all people possess natural rights: life, liberty, and property. Government exists by the consent of the governed and can be overthrown if it violates these rights. Directly inspired the American Declaration of Independence and the French Revolution.'},
+  {t:'Gavrilo Princip',u:'WWI',d:'(1894–1918) Bosnian-Serb nationalist and member of the Black Hand. Assassinated Archduke Franz Ferdinand and his wife Sophie in Sarajevo on June 28, 1914. His act triggered Austria\'s ultimatum to Serbia, activating the alliance system and igniting World War I. He was 19 — too young for execution; died in prison in 1918.'},
+  {t:'Robespierre',u:'French Revolution',d:'Maximilien Robespierre (1758–1794), radical Jacobin lawyer. As head of the Committee of Public Safety (1793–94), directed the Reign of Terror — executing ~17,000 officially as enemies of the Revolution. Believed terror was necessary to preserve liberty. Ironically arrested and guillotined himself on 9 Thermidor (July 27, 1794).'},
+  {t:'Copernicus',u:'Renaissance',d:'Nicolaus Copernicus (1473–1543), Polish astronomer. Proposed the heliocentric model in De Revolutionibus (published 1543 on his deathbed). Directly challenged Church doctrine (geocentrism). Launched the Scientific Revolution by subjecting the universe to mathematical analysis rather than religious authority.'},
+  {t:'Cecil Rhodes',u:'Imperialism',d:'(1853–1902) British diamond magnate (founder of De Beers) and imperialist politician. Founded Rhodesia (modern Zimbabwe). Dreamed of a continuous British empire from Cape Town to Cairo. Epitomized Social Darwinism and aggressive British imperialism in the Scramble for Africa.'},
+  {t:'Metternich',u:'Nationalism',d:'Prince Klemens von Metternich (1773–1859), Austrian Foreign Minister. Dominant figure at the Congress of Vienna (1814–15), where he shaped the conservative balance of power. Opposed liberalism and nationalism throughout Europe. His system held until the Revolutions of 1848 forced him to flee.'},
+  {t:'Garibaldi',u:'Nationalism',d:'Giuseppe Garibaldi (1807–1882), Italian nationalist and military genius. Led his Redshirts to conquer Sicily and Naples (1860) in one of history\'s boldest military campaigns. Handed his conquests to Victor Emmanuel II, completing Italian unification. Embodied romantic nationalism.'},
+  {t:'King Leopold II',u:'Imperialism',d:'King of Belgium (r.1865–1909) who personally owned the Congo Free State (1885–1908) as a private colony — not Belgian state property. Enforced rubber quotas through mutilation and murder. Estimated 10 million Congolese died. International outcry (Roger Casement\'s report, 1904) forced him to hand the Congo to Belgium.'},
+  {t:'Columbus',u:'Exploration',d:'Christopher Columbus (1451–1506), Genoese navigator sailing for Spain. Reached the Caribbean on October 12, 1492. Never acknowledged he had found a new continent — died believing he had reached Asia. His voyages launched the Columbian Exchange and 300 years of European colonization of the Americas.'},
+  {t:'John Calvin',u:'Reformation',d:'(1509–1564) French-Swiss reformer who established a theocracy in Geneva. Central doctrine: predestination — God has predetermined who is saved or damned. His Institutes of the Christian Religion (1536) was foundational. Calvinism spread to become the basis of Puritan, Presbyterian, and Reformed churches.'},
+  {t:'Alexander II',u:'Russia',d:'"Tsar Liberator" (r.1855–1881). Freed 23 million serfs by the Emancipation Edict (February 19, 1861). Created Zemstvos (local elected councils). Reformed the judiciary and military. Despite being the most reformist tsar, he was assassinated by the Narodnaya Volya (People\'s Will) in 1881.'}
+];
+
+const TRAPS=[
+  {h:'Locke: "property" — NOT "happiness"',b:'John Locke\'s natural rights are <span class="correct">life, liberty, and property</span>. Thomas Jefferson changed "property" to <span class="correct">"pursuit of happiness"</span> in the Declaration of Independence. Teachers test this distinction constantly.'},
+  {h:'Peace of Augsburg did NOT include Calvinism',b:'The Peace of Augsburg (1555) allowed only <span class="correct">Lutheranism or Catholicism</span>. Calvinism was <span class="wrong">not recognized</span>. The Thirty Years\' War (1618–48) was partly fought to settle this gap.'},
+  {h:'Magellan did NOT complete the circumnavigation',b:'Magellan was killed in the Philippines in 1521. His crew, under <span class="correct">Juan Sebastián Elcano</span>, completed the voyage. Magellan is credited for organizing/leading it, but he did not survive.'},
+  {h:'The Triple Alliance: Italy switched sides',b:'Italy was in the Triple Alliance with Germany and Austria-Hungary. In 1914, Italy declared <span class="correct">neutrality</span> (the war was offensive, not defensive). Italy later joined the <span class="correct">Entente</span> in 1915 for territorial promises.'},
+  {h:'The Spark vs. the Causes of WWI',b:'Franz Ferdinand\'s assassination was the <span class="correct">immediate trigger</span>, NOT a root cause. The root causes are <span class="correct">MAIN</span>: Militarism, Alliances, Imperialism, Nationalism. Don\'t confuse the match with the powder keg.'},
+  {h:'Robespierre was guillotined too',b:'Robespierre didn\'t just run the Terror — he was <span class="correct">executed by it</span>. Arrested on 9 Thermidor (July 27, 1794) by fellow revolutionaries who feared they were next. A favorite irony for short-answer questions.'},
+  {h:'Napoleon\'s two abdications and two exiles',b:'First abdication: April 1814 → exiled to <span class="correct">Elba</span>. Returned for the Hundred Days. Second abdication: June 1815 → exiled to <span class="correct">St. Helena</span> (remote Atlantic island). Know both.'},
+  {h:'Bloody Sunday did NOT end tsarism',b:'Bloody Sunday (January 1905) triggered the <span class="correct">1905 Revolution</span> — not the 1917 Revolution. The result was the <span class="correct">October Manifesto</span> and a Duma. The Tsar remained in power until 1917.'},
+  {h:'Garibaldi vs. Cavour: two very different people',b:'<span class="correct">Garibaldi</span> = romantic nationalist general who conquered southern Italy with his Redshirts. <span class="correct">Cavour</span> = pragmatic prime minister who used diplomacy and war to unite the north. Both were necessary for unification.'},
+  {h:'"Sick Man of Europe" = Ottoman Empire, not Russia',b:'The term (attributed to Tsar Nicholas I) referred to the <span class="correct">Ottoman Empire</span>. Russia was powerful but backward. Teachers sometimes present both as options.'},
+  {h:'Columbus never acknowledged the Americas',b:'Columbus died in 1506 still believing he had reached <span class="correct">Asia</span>. The continents were named after <span class="correct">Amerigo Vespucci</span>, who recognized it was a "New World."'},
+  {h:'Ausgleich created equality — not Hungarian independence',b:'The Ausgleich (1867) made Austria and Hungary <span class="correct">equal partners under one Habsburg ruler</span>. Hungary was NOT independent — it shared a foreign policy and military with Austria.'}
+];
+
+const TL=[
+  {y:'c.1440',e:'Gutenberg\'s Printing Press',d:'Mass production of books becomes possible.',c:''},
+  {y:'1453',e:'Fall of Constantinople',d:'Ottoman Turks capture the Byzantine capital; Greek scholars flee to Italy.',c:'Feeds the Renaissance in Italy.'},
+  {y:'1492',e:'Columbus + Reconquista complete',d:'Columbus reaches the Americas; Ferdinand and Isabella take Granada.',c:'Launches the Age of Exploration.'},
+  {y:'1517',e:'Luther\'s 95 Theses',d:'October 31 — Protestant Reformation begins.',c:'Printing press makes it unstoppable.'},
+  {y:'1534',e:'Act of Supremacy',d:'Henry VIII becomes head of the Church of England.',c:'English Reformation — political, not theological.'},
+  {y:'1543',e:'Copernicus — heliocentric model',d:'De Revolutionibus published; Scientific Revolution begins.',c:''},
+  {y:'1545',e:'Council of Trent opens',d:'Catholic Counter-Reformation officially launched.',c:'Response to 30 years of Protestant gains.'},
+  {y:'1555',e:'Peace of Augsburg',d:'German princes choose: Lutheran or Catholic. Not Calvinist.',c:''},
+  {y:'1588',e:'Spanish Armada defeated',d:'England repels Philip II; British naval power rises.',c:'Absolutism\'s limits exposed.'},
+  {y:'1687',e:'Newton\'s Principia',d:'Law of gravity and laws of motion; peak of Scientific Revolution.',c:'Reason, not faith, explains the universe.'},
+  {y:'1748',e:'Montesquieu\'s Spirit of the Laws',d:'Separation of powers theory published.',c:'Directly shapes U.S. Constitution (1787).'},
+  {y:'1776',e:'Adam Smith\'s Wealth of Nations',d:'Capitalism theorized; laissez-faire economics.',c:'Same year: American Declaration of Independence.'},
+  {y:'1789',e:'French Revolution begins',d:'Estates General → Tennis Court Oath → Bastille stormed (July 14).',c:'Nationalism and liberalism unleashed across Europe.'},
+  {y:'1793',e:'Reign of Terror begins',d:'Robespierre\'s Committee of Public Safety; mass executions.',c:'Revolution devours its own.'},
+  {y:'1799',e:'Napoleon takes power',d:'18 Brumaire coup ends the Directory.',c:''},
+  {y:'1804',e:'Napoleon becomes Emperor',d:'Napoleonic Code issued same year.',c:''},
+  {y:'1812',e:'Napoleon invades Russia',d:'Scorched earth; 600,000 in, ~100,000 out.',c:'Beginning of the end for Napoleon.'},
+  {y:'1815',e:'Congress of Vienna / Waterloo',d:'Napoleon defeated; conservative Europe restored.',c:'Balance of power replaces nationalism — temporarily.'},
+  {y:'1848',e:'Revolutions + Communist Manifesto',d:'Liberal/nationalist uprisings across Europe; mostly suppressed.',c:'Ideas survive even when revolts fail.'},
+  {y:'1861',e:'Italian Unification + Russian serfdom abolished',d:'Victor Emmanuel II proclaimed King of Italy; Alexander II frees serfs.',c:'Nationalism advances; reform in Russia begins.'},
+  {y:'1871',e:'German Unification',d:'Wilhelm I declared Kaiser at Versailles after Franco-Prussian War.',c:'Europe\'s balance of power permanently altered.'},
+  {y:'1884',e:'Berlin Conference',d:'Europeans divide Africa without African input.',c:'Scramble for Africa formalizes.'},
+  {y:'1905',e:'Russo-Japanese War ends + 1905 Revolution',d:'Russia humiliated; Bloody Sunday → October Manifesto → Duma.',c:'Russia unstable; revolution deferred, not prevented.'},
+  {y:'1914',e:'WWI begins',d:'June 28: Gavrilo Princip assassinates Franz Ferdinand in Sarajevo.',c:'MAIN causes explode into war.'}
+];
+
+const CITIES=['Florence','Rome','Geneva','Trent','Wittenberg','Worms','Berlin','Versailles','Paris','London','Moscow','Augsburg','Sarajevo','Prague','Budapest','Constantinople','Waterloo','Trafalgar'];
+const REGIONS=['Papal States','Sardinia-Piedmont','Prussia','Aragon','Castille','Austria-Hungary','Ottoman Empire','Russia','Britain','France','The Crimean Peninsula','Corsica'];
+
+let allTerms=UNITS.flatMap(u=>u.terms);
+let fcCards=[...allTerms];
+let fcIdx=0;
+let fcKnown=new Set();
+let reviewed=new Set();
+let qShuffled=[],qIdx=0,qScore=0,qAnswered=false;
+let wrongQ=[];
+
+const QS=[
+  {q:'Which document did Martin Luther post on October 31, 1517?',o:['Act of Supremacy','95 Theses','Concordat of 1801','Communist Manifesto'],a:1,u:'ren',f:'95 Theses — October 31, 1517, Wittenberg. Know the exact date.'},
+  {q:'The Peace of Augsburg (1555) allowed German princes to choose between which two faiths?',o:['Lutheranism and Calvinism','Catholicism and Calvinism','Lutheranism and Catholicism','Anglicanism and Lutheranism'],a:2,u:'ren',f:'Only Lutheranism or Catholicism. Calvinism was NOT included — this caused the Thirty Years\' War.'},
+  {q:'John Locke\'s natural rights were life, liberty, and...',o:['Happiness','Equality','Property','Security'],a:2,u:'enl',f:'PROPERTY — not happiness. Jefferson changed it in the Declaration of Independence. This is a classic trap.'},
+  {q:'What does MAIN stand for in the causes of WWI?',o:['Monarchy, Alliances, Industry, Nationalism','Militarism, Alliance System, Imperialism, Nationalism','Military, Austria, Infantry, Nationalism','Maps, Armaments, Imperialism, Nationalism'],a:1,u:'wwi',f:'Militarism, Alliance System, Imperialism, Nationalism. The assassination was the SPARK, not a root cause.'},
+  {q:'The Treaty of Tordesillas (1494) divided colonial claims between...',o:['England and France','Spain and Portugal','Spain and the Netherlands','Portugal and France'],a:1,u:'exp',f:'Spain and Portugal. Spain got the Americas (minus Brazil); Portugal got Africa, Asia, and Brazil.'},
+  {q:'Who assassinated Archduke Franz Ferdinand?',o:['Kaiser Wilhelm II','Franz Joseph I','Gavrilo Princip','Metternich'],a:2,u:'wwi',f:'Gavrilo Princip — 19-year-old Bosnian-Serb nationalist. June 28, 1914, Sarajevo.'},
+  {q:'The Reign of Terror ended when...',o:['Napoleon took power','Louis XVI was executed','Robespierre himself was guillotined','The Directory was formed'],a:2,u:'frn',f:'Robespierre was arrested and guillotined on 9 Thermidor (July 27, 1794). The Terror devoured its own architect.'},
+  {q:'Italy\'s role in WWI — which alliance did it join?',o:['Triple Alliance (Germany/Austria)','Triple Entente (France/Britain/Russia)','It stayed neutral throughout','It joined the Ottoman Empire'],a:1,u:'wwi',f:'Italy was in the Triple Alliance but declared neutrality in 1914, then joined the ENTENTE in 1915 for territorial promises.'},
+  {q:'Bismarck unified Germany through which three wars?',o:['Napoleonic Wars, Crimean War, Franco-Prussian War','Danish, Austro-Prussian, Franco-Prussian Wars','Peninsular, Danish, Austro-Prussian Wars','Franco-Prussian, Crimean, Russo-Japanese Wars'],a:1,u:'nat',f:'Danish War (1864), Austro-Prussian War (1866), Franco-Prussian War (1870–71). Know all three.'},
+  {q:'The Columbian Exchange resulted in which of the following?',o:['A treaty between Spain and Portugal','Transfer of crops, animals, and diseases between Old and New Worlds','Columbus\'s discovery of a route to Asia','The establishment of the Treaty of Tordesillas'],a:1,u:'exp',f:'Bi-directional exchange: smallpox and horses went to the Americas; potatoes, corn, and tomatoes came to Europe.'},
+  {q:'Bloody Sunday (1905) occurred under which tsar?',o:['Alexander II','Alexander III','Nicholas I','Nicholas II'],a:3,u:'emp',f:'Nicholas II. His troops shot peaceful marchers outside the Winter Palace on January 9, 1905.'},
+  {q:'The Ausgleich (1867) created...',o:['German Unification','The Congress of Vienna system','The Austro-Hungarian Dual Monarchy','The Concert of Europe'],a:2,u:'emp',f:'The Dual Monarchy — Austria and Hungary as equal partners under one Habsburg (Francis Joseph I). Not independence.'},
+  {q:'Which Italian leader used Realpolitik to engineer northern Italian unification?',o:['Garibaldi','Mazzini','Cavour','Victor Emmanuel II'],a:2,u:'nat',f:'Cavour — pragmatic, diplomatic, strategic. Garibaldi did the military fighting in the south. Both were necessary.'},
+  {q:'Social Darwinism was most directly used to justify...',o:['Labor unions','European imperialism','The French Revolution','Protestantism'],a:1,u:'imp',f:'"Survival of the fittest" applied to nations/races — used to claim European superiority justified conquering non-Europeans.'},
+  {q:'The Berlin Conference (1884–85) was significant because...',o:['It ended the Crimean War','It created the Triple Alliance','Europeans divided Africa with no African input','It unified Germany'],a:2,u:'imp',f:'No African leaders were present. 14 European nations carved up a continent that wasn\'t theirs. The entire continent except Ethiopia and Liberia was colonized.'},
+  {q:'Magellan\'s circumnavigation was completed by...',o:['Magellan himself','Bartolomeu Dias','Juan Sebastián Elcano','Vasco da Gama'],a:2,u:'exp',f:'Elcano — Magellan was killed in the Philippines (1521). His crew completed the voyage in 1522.'},
+  {q:'The October Manifesto (1905) was issued by...',o:['Alexander II','Karl Marx','Nicholas II','Bismarck'],a:2,u:'emp',f:'Nicholas II — in response to the 1905 Revolution after Bloody Sunday. Promised civil liberties and a Duma. He later rolled most of it back.'},
+  {q:'Which body did the Third Estate create after the Tennis Court Oath?',o:['The Directory','The Committee of Public Safety','The National Assembly','The Jacobin Club'],a:2,u:'frn',f:'The National Assembly (later the Constituent National Assembly). It began drafting France\'s first constitution.'},
+  {q:'The "Sick Man of Europe" referred to which empire?',o:['Austria-Hungary','Russia','Spain','Ottoman Empire'],a:3,u:'emp',f:'Ottoman Empire — steadily losing territory in the 19th century. Attributed to Tsar Nicholas I. Russia was weak too, but this term is specifically for the Ottomans.'},
+  {q:'King Leopold II\'s Congo Free State was...',o:['A Belgian government colony','His personal private property','Shared between Belgium and France','A British protectorate'],a:1,u:'imp',f:'Leopold\'s PERSONAL property — not a Belgian colony. He kept profits, used forced labor, and caused ~10 million deaths before international outcry forced him to hand it to Belgium in 1908.'}
+];
+
+function showTab(id,btn){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('on'));
+  document.getElementById('sec-'+id).classList.add('on');
+  btn.classList.add('on');
+}
+
+function buildUnits(){
+  const g=document.getElementById('ugrid');
+  UNITS.forEach(u=>{
+    const d=document.createElement('div');d.className='ucard';
+    d.innerHTML=`<div class="ico">${u.ico}</div><h3>${u.label}</h3><div class="cnt">${u.terms.length} terms</div>`;
+    d.onclick=()=>{
+      document.querySelectorAll('.tabs button').forEach((b,i)=>{b.classList.toggle('on',i===1)});
+      document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
+      document.getElementById('sec-flashcards').classList.add('on');
+      setFilter(u.id);
+    };
+    g.appendChild(d);
+  });
+}
+
+function buildFilter(){
+  const f=document.getElementById('fcfilter');
+  const ab=document.createElement('button');ab.className='on';ab.id='ff-all';ab.textContent='All units';
+  ab.onclick=()=>setFilter('all');f.appendChild(ab);
+  UNITS.forEach(u=>{
+    const b=document.createElement('button');b.id='ff-'+u.id;
+    b.textContent=u.ico+' '+u.label.split(' ')[0];
+    b.onclick=()=>setFilter(u.id);f.appendChild(b);
+  });
+}
+
+function setFilter(id){
+  document.querySelectorAll('.fc-filter button').forEach(b=>b.classList.remove('on'));
+  document.getElementById('ff-'+id).classList.add('on');
+  fcCards=id==='all'?[...allTerms]:[...UNITS.find(u=>u.id===id).terms];
+  fcIdx=0;showCard();
+}
+
+function getUnit(term){return UNITS.find(u=>u.terms.includes(term))?.label||''}
+
+function showCard(){
+  if(!fcCards.length)return;
+  const t=fcCards[fcIdx];
+  document.getElementById('fct').textContent=t;
+  document.getElementById('fcd').textContent=DEFS[t]||'Study this term.';
+  document.getElementById('fcu').textContent=getUnit(t).toUpperCase();
+  document.getElementById('fccard').classList.remove('flip');
+  document.getElementById('fcc').textContent=(fcIdx+1)+' / '+fcCards.length;
+  reviewed.add(t);
+  const pct=Math.round(reviewed.size/allTerms.length*100);
+  document.getElementById('gpf').style.width=pct+'%';
+  document.getElementById('gpt').textContent=reviewed.size+' of '+allTerms.length+' terms reviewed';
+  const kp=Math.round(fcKnown.size/fcCards.length*100)||0;
+  document.getElementById('fcpbar').style.width=kp+'%';
+  document.getElementById('fcptxt').textContent=fcKnown.has(t)?'✓ You know this one':fcKnown.size+' of '+fcCards.length+' known';
+}
+
+function flipFC(){document.getElementById('fccard').classList.toggle('flip')}
+function fcMove(d){fcIdx=(fcIdx+d+fcCards.length)%fcCards.length;showCard()}
+function fcShuffle(){fcCards=[...fcCards].sort(()=>Math.random()-.5);fcIdx=0;showCard()}
+function fcKnow(){fcKnown.add(fcCards[fcIdx]);fcMove(1)}
+function fcDontKnow(){fcKnown.delete(fcCards[fcIdx]);fcMove(1)}
+
+function initQuiz(){
+  qShuffled=[...QS].sort(()=>Math.random()-.5);
+  qIdx=0;qScore=0;wrongQ=[];renderQ();
+}
+
+function renderQ(){
+  const w=document.getElementById('qwrap');
+  if(qIdx>=qShuffled.length){showScore(w);return}
+  const q=qShuffled[qIdx];qAnswered=false;
+  w.innerHTML=`<div class="qbox">
+    <div class="q-num">Question ${qIdx+1} of ${qShuffled.length} &nbsp;·&nbsp; Score: ${qScore}</div>
+    <div class="q-txt">${q.q}</div>
+    <div class="opts">${q.o.map((o,i)=>`<button class="opt" onclick="ansQ(${i})">${String.fromCharCode(65+i)}. ${o}</button>`).join('')}</div>
+    <div class="qfb" id="qfb"></div>
+  </div>
+  <div class="q-nav"><button id="nxtb" style="display:none" onclick="qIdx++;renderQ()">Next →</button></div>`;
+}
+
+function ansQ(i){
+  if(qAnswered)return;qAnswered=true;
+  const q=qShuffled[qIdx];
+  document.querySelectorAll('.opt').forEach((b,j)=>{
+    b.disabled=true;
+    if(j===q.a)b.classList.add('ok');
+    else if(j===i&&i!==q.a)b.classList.add('no');
+  });
+  const fb=document.getElementById('qfb');fb.classList.add('on');
+  if(i===q.a){qScore++;fb.classList.add('ok');fb.innerHTML='<strong>Correct.</strong> '+q.f}
+  else{wrongQ.push(q);fb.classList.add('no');fb.innerHTML='<strong>Wrong.</strong> '+q.f}
+  document.getElementById('nxtb').style.display='inline-block';
+}
+
+function showScore(w){
+  const p=Math.round(qScore/qShuffled.length*100);
+  const msg=p>=90?'Exam-ready. You know this material cold.':p>=75?'Solid — but review every wrong answer before the exam.':p>=60?'Passing, but not comfortable. Back to flashcards on your weak units.':'Not there yet. Identify your weakest units and drill them hard.';
+  const wrongHtml=wrongQ.length?`<div class="score-breakdown"><div style="font-size:.75rem;color:var(--muted);margin-bottom:.5rem;letter-spacing:.06em">MISSED QUESTIONS</div>${wrongQ.map(q=>`<div class="sb-item"><span>${q.q.substring(0,55)}...</span><span>${UNITS.find(u=>u.id===q.u)?.label.split(' ')[0]||''}</span></div>`).join('')}</div>`:'';
+  w.innerHTML=`<div class="score-card">
+    <div class="score-big">${p}%</div>
+    <div class="score-sub">${qScore} correct out of ${qShuffled.length}</div>
+    <div class="score-msg">${msg}</div>
+    ${wrongHtml}
+    <button class="retry-btn" onclick="initQuiz()">Retake (reshuffled)</button>
+  </div>`;
+}
+
+function buildIDs(){
+  const g=document.getElementById('idgrid');
+  IDS.forEach(x=>{
+    const d=document.createElement('div');d.className='idcard';
+    d.innerHTML=`<div class="id-unit">${x.u.toUpperCase()}</div><h4>${x.t}</h4><p>${x.d}</p>`;
+    g.appendChild(d);
+  });
+}
+
+function buildTraps(){
+  const c=document.getElementById('traplist');
+  TRAPS.forEach(t=>{
+    const d=document.createElement('div');d.className='trap';
+    d.innerHTML=`<h4>${t.h}</h4><p>${t.b}</p>`;
+    c.appendChild(d);
+  });
+}
+
+function buildTimeline(){
+  const c=document.getElementById('tlcont');
+  TL.forEach(x=>{
+    const d=document.createElement('div');d.className='tli';
+    d.innerHTML=`<div class="tl-year">${x.y}</div><div class="tl-event">${x.e}</div><div class="tl-desc">${x.d}</div>${x.c?`<div class="tl-connection">→ ${x.c}</div>`:''}`;
+    c.appendChild(d);
+  });
+}
+
+function buildMap(){
+  const cl=document.getElementById('citieslist');
+  const rl=document.getElementById('regionslist');
+  CITIES.forEach(c=>{const li=document.createElement('li');li.textContent=c;cl.appendChild(li)});
+  REGIONS.forEach(r=>{const li=document.createElement('li');li.textContent=r;rl.appendChild(li)});
+}
+
+buildUnits();buildFilter();buildIDs();buildTraps();buildTimeline();buildMap();setFilter('all');
+</script>
+</body>
+</html>
